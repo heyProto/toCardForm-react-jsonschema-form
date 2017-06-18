@@ -26,7 +26,6 @@ const widgetMap = {
     "date-time": "DateTimeWidget",
     "alt-date": "AltDateWidget",
     "alt-datetime": "AltDateTimeWidget",
-    color: "ColorWidget",
     file: "FileWidget",
   },
   number: {
@@ -50,6 +49,9 @@ const widgetMap = {
     checkboxes: "CheckboxesWidget",
     files: "FileWidget",
   },
+  color: {
+    color: "ColorWidget",
+  }
 };
 
 export function getDefaultRegistry() {
@@ -74,7 +76,6 @@ export function getWidget(schema, widget, registeredWidgets = {}) {
     }
     return Widget.MergedWidget;
   }
-
   if (typeof widget === "function") {
     return mergeOptions(widget);
   }

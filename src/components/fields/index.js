@@ -1,5 +1,6 @@
 import ArrayField from "./ArrayField";
 import BooleanField from "./BooleanField";
+import ColorField from "./ColorField";
 import DescriptionField from "./DescriptionField";
 import NumberField from "./NumberField";
 import ObjectField from "./ObjectField";
@@ -11,6 +12,7 @@ import UnsupportedField from "./UnsupportedField";
 export default {
   ArrayField,
   BooleanField,
+  ColorField,
   DescriptionField,
   NumberField,
   ObjectField,
