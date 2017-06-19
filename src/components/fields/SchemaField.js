@@ -8,6 +8,7 @@ import {
   getUiOptions,
   isFilesArray,
   deepEquals,
+  retrieveFromURL
 } from "../../utils";
 import UnsupportedField from "./UnsupportedField";
 
@@ -147,7 +148,8 @@ function SchemaFieldRender(props) {
     formContext,
     FieldTemplate = DefaultTemplate,
   } = registry;
-  const schema = retrieveSchema(props.schema, definitions);
+  var schema = retrieveSchema(props.schema, definitions);
+  schema = retrieveFromURL(schema,definitions);
   const FieldComponent = getFieldComponent(schema, uiSchema, fields);
   const { DescriptionField } = fields;
   const disabled = Boolean(props.disabled || uiSchema["ui:disabled"]);
