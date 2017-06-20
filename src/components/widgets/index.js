@@ -16,11 +16,14 @@ import TextareaWidget from "./TextareaWidget";
 import TextWidget from "./TextWidget";
 import URLWidget from "./URLWidget";
 import UpDownWidget from "./UpDownWidget";
-
+import ImageWidget from "./ImageWidget";
+import CropperWidget from "./CropperWidget";
 export default {
   PasswordWidget,
+  CropperWidget,
   RadioWidget,
   UpDownWidget,
+  ImageWidget,
   RangeWidget,
   SelectWidget,
   TextWidget,
