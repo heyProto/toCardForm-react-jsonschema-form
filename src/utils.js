@@ -52,6 +52,9 @@ const widgetMap = {
   },
   color: {
     color: "ColorWidget",
+  },
+  image:{
+    image: "ImageWidget",
   }
 };
 

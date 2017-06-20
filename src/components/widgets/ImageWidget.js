@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-
+import CropperWidget from "./CropperWidget";
 import { dataURItoBlob, shouldRender, setState } from "../../utils";
 
 function addNameToDataURL(dataURL, name) {
@@ -59,7 +59,7 @@ function extractFileInfo(dataURLs) {
     });
 }
 
-class FileWidget extends Component {
+class ImageWidget extends Component {
   defaultProps = {
     multiple: false,
   };
@@ -75,54 +75,24 @@ class FileWidget extends Component {
     return shouldRender(this, nextProps, nextState);
   }
 
-  onChange = event => {
-    const { multiple, onChange } = this.props;
-    processFiles(event.target.files).then(filesInfo => {
-      const state = {
-        values: filesInfo.map(fileInfo => fileInfo.dataURL),
-        filesInfo,
-      };
-      setState(this, state, () => {
-        if (multiple) {
-          onChange(state.values);
-        } else {
-            console.log(state.values[0]);
-            console.log(onChange);
-          onChange(state.values[0]);
-        }
-      });
-    });
-  };
-
   render() {
     const { multiple, id, readonly, disabled, autofocus } = this.props;
     const { filesInfo } = this.state;
     return (
       <div>
-        <p>
-          <input
-            ref={ref => (this.inputRef = ref)}
-            id={id}
-            type="file"
-            disabled={readonly || disabled}
-            onChange={this.onChange}
-            defaultValue=""
-            autoFocus={autofocus}
-            multiple={multiple}
-          />
-        </p>
+        <CropperWidget onch = {this.props.onChange} ratio = {this.props.schema.ratio}/>
         <FilesInfo filesInfo={filesInfo} />
       </div>
     );
   }
 }
 
-FileWidget.defaultProps = {
+ImageWidget.defaultProps = {
   autofocus: false,
 };
 
 if (process.env.NODE_ENV !== "production") {
-  FileWidget.propTypes = {
+  ImageWidget.propTypes = {
     multiple: PropTypes.bool,
     value: PropTypes.oneOfType([
       PropTypes.string,
@@ -132,4 +102,4 @@ if (process.env.NODE_ENV !== "production") {
   };
 }
 
-export default FileWidget;
+export default ImageWidget;

@@ -21,6 +21,7 @@ const COMPONENT_TYPES = {
   number: "NumberField",
   object: "ObjectField",
   string: "StringField",
+  image: "ImageField"
 };
 
 function getFieldComponent(schema, uiSchema, fields) {

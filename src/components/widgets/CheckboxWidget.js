@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import DescriptionField from "../fields/DescriptionField.js";
-
+import { Checkbox } from 'semantic-ui-react';
 function CheckboxWidget(props) {
   const {
     schema,
