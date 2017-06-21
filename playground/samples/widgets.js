@@ -53,7 +53,7 @@ module.exports = {
             title: "textarea",
           },
           color: {
-            type: "string",
+            type: "color",
             title: "color picker",
             default: "#151ce6",
           },
@@ -101,10 +101,7 @@ module.exports = {
         "ui:options": {
           rows: 5,
         },
-      },
-      color: {
-        "ui:widget": "color",
-      },
+      }
     },
     secret: {
       "ui:widget": "hidden",

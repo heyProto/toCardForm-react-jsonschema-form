@@ -18,12 +18,13 @@ import URLWidget from "./URLWidget";
 import UpDownWidget from "./UpDownWidget";
 import ImageWidget from "./ImageWidget";
 import CropperWidget from "./CropperWidget";
+
 export default {
-  PasswordWidget,
+  ImageWidget,
   CropperWidget,
+  PasswordWidget,
   RadioWidget,
   UpDownWidget,
-  ImageWidget,
   RangeWidget,
   SelectWidget,
   TextWidget,
