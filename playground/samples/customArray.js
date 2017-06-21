@@ -42,7 +42,7 @@ function ArrayFieldTemplate(props) {
   );
 }
 
-/*module.exports = {
+module.exports = {
   schema: {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "Product set",
@@ -104,8 +104,8 @@ function ArrayFieldTemplate(props) {
 },
   formData: [],
   ArrayFieldTemplate,
-};*/
-module.exports = {
+};
+/*module.exports = {
   schema: {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "definitions": {},
@@ -174,5 +174,5 @@ module.exports = {
 },
   formData: [],
   ArrayFieldTemplate,
-};
+};*/
 

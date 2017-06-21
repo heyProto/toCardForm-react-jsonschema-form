@@ -6,7 +6,8 @@ module.exports = {
     "image": {
       "title": "Upload an Image: ",
       "type": "image",
-      "ratio": "2/1"
+      "ratio": "2/1",
+      "utype":"url"
     }
   }
 },

@@ -80,7 +80,7 @@ class ImageWidget extends Component {
     const { filesInfo } = this.state;
     return (
       <div>
-        <CropperWidget onch = {this.props.onChange} ratio = {this.props.schema.ratio}/>
+        <CropperWidget onch = {this.props.onChange} ratio = {this.props.schema.ratio} utype = {this.props.schema.utype}/>
         <FilesInfo filesInfo={filesInfo} />
       </div>
     );
