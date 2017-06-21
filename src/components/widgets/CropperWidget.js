@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'cropperjs/dist/cropper.css';
 import Cropper from 'react-cropper';
-
+import Modal from 'react-modal';
 export default class CropperWidget extends Component {
 
   constructor(props) {
@@ -9,13 +9,23 @@ export default class CropperWidget extends Component {
     this.state = {
       src: null,
       cropResult: null,
-      url:null
+      url:null,
+      showModal:false,
     };
     this.cropImage = this.cropImage.bind(this);
     this.onChangeURL = this.onChangeURL.bind(this);
     this.onChangeFile = this.onChangeFile.bind(this);
-  }
+    this.handleOpenModal = this.handleOpenModal.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
 
+  }
+  handleOpenModal () {
+    this.setState({ showModal: true });
+  }
+  
+  handleCloseModal () {
+    this.setState({ showModal: false });
+  }
   onChangeFile(e) {
     e.preventDefault();
     let files;
@@ -26,7 +36,9 @@ export default class CropperWidget extends Component {
     }
     const reader = new FileReader();
     reader.onload = () => {
-      this.setState({ src: reader.result });
+      this.setState({ 
+      src: reader.result,
+      cropResult:null});
     };
     reader.readAsDataURL(files[0]);
   }
@@ -46,9 +58,11 @@ export default class CropperWidget extends Component {
     this.setState({
       cropResult: data,
     });
-    this.props.onch(data);
+    //this.props.onch(data);
   }
   loadImage( src ){
+    var file = document.getElementById("file");
+    file.value = "";
     this.setState({
         src:src,
         cropResult:null
@@ -110,22 +124,23 @@ export default class CropperWidget extends Component {
           <br style={{ clear: 'both' }} />
         </div>
       );
-    }else{
+    }else if(this.props.utype === "file"){
       if(this.state.src === null){
-      return (
-        <div>
-          <div className = "check" style={{ width: '100%' }}>
-            <input type="file" onChange={this.onChangeFile} />
-            <br />
-            <br />
-          </div>
-      </div>
+          return (
+            <div>
+              <div className = "check" style={{ width: '100%' }}>
+                <input type="file" onChange={this.onChangeFile} />
+                <br />
+                <br />
+              </div>
+            </div>
           );
       }
       return (
         <div>
           <div className = "check" style={{ width: '100%' }}>
             <input type="file" onChange={this.onChangeFile} />
+            
             <br />
             <br />
             <Cropper
@@ -150,6 +165,85 @@ export default class CropperWidget extends Component {
           </div>
           <br style={{ clear: 'both' }} />
         </div>
+      );
+    }else{
+      if(this.state.src === null){
+        var customStyle = {
+          overlay:{
+            "z-index":10
+          }
+        }
+        return (
+        <div>
+          <button onClick={this.handleOpenModal}>Trigger Modal</button>
+          <Modal style={{overlay: {zIndex: 10}}} isOpen={this.state.showModal}
+           contentLabel="Minimal Modal Example">
+            <div>
+              <div className = "check" style={{ width: '100%' }}>
+                <label>File Upload: </label><input type="file" id="file" onChange={this.onChangeFile} />
+                <div style = { {float:"right",marginTop:"-50px",marginRight:"400px"} }>
+                  <label>URL Upload: </label><br/><input type="url" onChange={this.onChangeURL} />
+                  <br/>
+                  <br/>
+                  <button onClick={()=>{this.loadImage(this.state.url)}} className = "btn">
+                    Load Image
+                  </button>
+                </div>
+                <br />
+                <br />
+              </div>
+            </div>
+            <button onClick={this.handleCloseModal}>Close Modal</button>
+          </Modal>
+        </div>
+        );
+      }
+      return (
+      <div>
+        <button onClick={this.handleOpenModal}>Trigger Modal</button>
+        <Modal style={{overlay: {zIndex: 10}}} isOpen={this.state.showModal}
+           contentLabel="Minimal Modal Example">
+          <div>
+            <div className = "check" style={{ width: '100%' }}>
+              <label>File Upload: </label><input type="file" id="file" onChange={this.onChangeFile} />
+              <div style = { {float:"right",marginTop:"-60px",marginRight:"400px"} }>
+                <label>URL Upload: </label><br/><input type="url" onChange={this.onChangeURL} />
+                <br/>
+                <br/>
+                <button onClick={()=>{this.loadImage(this.state.url)}} className = "btn">
+                  Load Image
+                </button>
+              </div>
+              <br />
+              <br />
+              <Cropper
+                viewMode={2}
+                background = {false}
+                modal = {true}
+                style={{ height: 300, width: '50%', marginTop:"30px"}}
+                preview=".img-preview"
+                aspectRatio = {eval(this.props.ratio)}
+                guides={true}
+                movable = {true}
+                src={this.state.src}
+                ref={cropper => { this.cropper = cropper; }}
+              />
+            </div>
+            <div>
+              <div className="box" style={{ width: '40%',float:'right'}}>
+                <h1>
+                  <button onClick={this.cropImage} style={{ marginLeft:"-120px",marginTop:"-400px"}} className = "btn">
+                    Crop Image
+                  </button>
+                </h1>
+                { (this.state.cropResult === null)? "" :<img style={{ width: '70%',marginTop: "-450px",border:"1px solid black"}} src={this.state.cropResult} alt="cropped image" />}
+              </div>
+            </div>
+            <br style={{ clear: 'both' }} />
+          </div>
+          <button onClick={this.handleCloseModal}>Close Modal</button>
+        </Modal>
+      </div>
       );
     }
   }
