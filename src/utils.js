@@ -1,5 +1,6 @@
 import React from "react";
 import "setimmediate";
+import request from "sync-request";
 
 const widgetMap = {
   boolean: {
@@ -51,6 +52,9 @@ const widgetMap = {
   },
   color: {
     color: "ColorWidget",
+  },
+  image:{
+    image: "ImageWidget",
   }
 };
 
@@ -334,7 +338,7 @@ function findSchemaDefinition($ref, definitions = {}) {
   }
 
   // No matching definition found, that's an error (bogus schema?)
-  throw new Error(`Could not find a definition for ${$ref}.`);
+   throw new Error(`Could not find a definition for ${$ref}.`);
 }
 
 export function retrieveSchema(schema, definitions = {}) {
@@ -344,12 +348,21 @@ export function retrieveSchema(schema, definitions = {}) {
   }
   // Retrieve the referenced schema definition.
   const $refSchema = findSchemaDefinition(schema.$ref, definitions);
-  // Drop the $ref property of the source schema.
+    // Drop the $ref property of the source schema.
   const { $ref, ...localSchema } = schema;
   // Update referenced schema definition with local schema properties.
   return { ...$refSchema, ...localSchema };
 }
 
+export function retrieveFromURL(schema,definitions = {}){
+  if(!schema.hasOwnProperty("$url")){
+    return schema;
+  }
+  var response = request('GET',schema.$url);
+  const { $url, ...localSchema } = schema;
+  const $refSchema = JSON.parse(response.body);
+  return { ...$refSchema, ...localSchema };
+}
 function isArguments(object) {
   return Object.prototype.toString.call(object) === "[object Arguments]";
 }
@@ -440,15 +453,19 @@ export function toIdSchema(schema, id, definitions) {
   const idSchema = {
     $id: id || "root",
   };
+  if (schema.type !== "object") {
+    return idSchema;
+  }
   if ("$ref" in schema) {
     const _schema = retrieveSchema(schema, definitions);
     return toIdSchema(_schema, id, definitions);
   }
+  if("$url" in schema){
+    const _schema = retrieveFromURL(schema,definitions);
+    return toIdSchema(_schema, id, definitions);
+  }
   if ("items" in schema && !schema.items.$ref) {
     return toIdSchema(schema.items, id, definitions);
-  }
-  if (schema.type !== "object") {
-    return idSchema;
   }
   for (const name in schema.properties || {}) {
     const field = schema.properties[name];

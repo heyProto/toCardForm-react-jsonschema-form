@@ -8,12 +8,14 @@ import SchemaField from "./SchemaField";
 import StringField from "./StringField";
 import TitleField from "./TitleField";
 import UnsupportedField from "./UnsupportedField";
+import ImageField from "./ImageField";
 
 export default {
   ArrayField,
   BooleanField,
   ColorField,
   DescriptionField,
+  ImageField,
   NumberField,
   ObjectField,
   SchemaField,
