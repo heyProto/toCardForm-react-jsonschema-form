@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button } from 'semantic-ui-react';
 
 function RadioWidget(props) {
   const {
@@ -15,29 +14,6 @@ function RadioWidget(props) {
   // Generating a unique field name to identify this set of radio buttons
   const name = Math.random().toString();
   const { enumOptions, inline } = options;
-  if(enumOptions.length === 2){
-    return (
-    <div className="rad-group">
-        <Button.Group>
-            <Button>{enumOptions[0].label}</Button>
-            <Button.Or />
-            <Button>{enumOptions[1].label}</Button>
-        </Button.Group>
-    </div>
-  );
-  }else if(enumOptions.length === 3){
-    return (
-    <div className="field-radio-group">
-        <Button.Group>
-            <Button>{enumOptions[0].label}</Button>
-            <Button.Or />
-            <Button>{enumOptions[1].label}</Button>
-            <Button.Or />
-            <Button>{enumOptions[2].label}</Button>   
-        </Button.Group>
-    </div>
-  );
-  }else{
   // checked={checked} has been moved above name={name}, As mentioned in #349;
   // this is a temporary fix for radio button rendering bug in React, facebook/react#7630.
   return (
@@ -73,7 +49,6 @@ function RadioWidget(props) {
       })}
     </div>
   );
-}
 }
 
 RadioWidget.defaultProps = {

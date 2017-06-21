@@ -40,16 +40,10 @@
     "react": "^15.0.0"
   },
   "dependencies": {
-    "axios": "^0.16.2",
-    "cropperjs": "^1.0.0-rc.2",
     "jsonschema": "^1.0.2",
     "lodash.topath": "^4.5.2",
     "prop-types": "^15.5.8",
-    "react-cropper": "^0.12.0",
-    "semantic-ui-css": "^2.2.10",
-    "semantic-ui-react": "^0.68.5",
-    "setimmediate": "^1.0.5",
-    "sync-request": "^4.1.0"
+    "setimmediate": "^1.0.5"
   },
   "devDependencies": {
     "atob": "^2.0.3",

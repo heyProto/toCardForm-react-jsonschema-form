@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Button } from 'semantic-ui-react';
 
 import { default as DefaultErrorList } from "./ErrorList";
 import {
@@ -178,6 +177,7 @@ export default class Form extends Component {
         acceptCharset={acceptcharset}
         noValidate={noHtml5Validate}
         onSubmit={this.onSubmit}>
+        {this.renderErrors()}
         <_SchemaField
           schema={schema}
           uiSchema={uiSchema}
@@ -191,13 +191,9 @@ export default class Form extends Component {
         />
         {children
           ? children
-          : <div>
-              <Button.Group>
-                <Button negative>Clear</Button>
-                <Button.Or />
-                <Button positive>Save</Button>
-                </Button.Group>
-            </div>}
+          : <p>
+              <button type="submit" className="btn btn-info">Submit</button>
+            </p>}
       </form>
     );
   }

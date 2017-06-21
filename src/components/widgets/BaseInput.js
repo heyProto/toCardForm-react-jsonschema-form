@@ -16,17 +16,14 @@ function BaseInput(props) {
     registry,
     ...inputProps
   } = props;
-  var error = false;
-  if(props.required === true && (props.value === undefined || props.value === "")){
-    error = true;
-  }
+
   inputProps.type = options.inputType || inputProps.type || "text";
   const _onChange = ({ target: { value } }) => {
     return props.onChange(value === "" ? options.emptyValue : value);
   };
   return (
     <input
-      className = "form-control"
+      className="form-control"
       readOnly={readonly}
       disabled={disabled}
       autoFocus={autofocus}

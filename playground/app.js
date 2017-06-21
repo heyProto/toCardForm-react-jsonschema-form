@@ -428,8 +428,8 @@ class App extends Component {
                 schema={liveValidateSchema}
                 formData={liveValidate}
                 onChange={this.setLiveValidate}>
-                <div/>
-                </Form>
+                <div />
+              </Form>
             </div>
             <div className="col-sm-2">
               <ThemeSelector theme={theme} select={this.onThemeSelected} />
@@ -478,7 +478,21 @@ class App extends Component {
               onBlur={(id, value) =>
                 console.log(`Touched ${id} with value ${value}`)}
               transformErrors={transformErrors}
-              onError={log("errors")}/>}
+              onError={log("errors")}>
+              <div className="row">
+                <div className="col-sm-3">
+                  <button className="btn btn-primary" type="submit">
+                    Submit
+                  </button>
+                </div>
+                <div className="col-sm-9 text-right">
+                  <CopyLink
+                    shareURL={this.state.shareURL}
+                    onShare={this.onShare}
+                  />
+                </div>
+              </div>
+            </Form>}
         </div>
       </div>
     );

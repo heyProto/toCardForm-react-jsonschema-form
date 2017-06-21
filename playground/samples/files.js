@@ -1,15 +1,23 @@
 module.exports = {
   schema: {
-  "title": "Files",
-  "type": "object",
-  "properties": {
-    "image": {
-      "title": "Upload an Image: ",
-      "type": "image",
-      "ratio": "2/1"
-    }
-  }
-},
+    title: "Files",
+    type: "object",
+    properties: {
+      file: {
+        type: "string",
+        format: "data-url",
+        title: "Single file",
+      },
+      files: {
+        type: "array",
+        title: "Multiple files",
+        items: {
+          type: "string",
+          format: "data-url",
+        },
+      },
+    },
+  },
   uiSchema: {},
   formData: {},
 };

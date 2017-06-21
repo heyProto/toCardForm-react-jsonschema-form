@@ -86,8 +86,6 @@ class FileWidget extends Component {
         if (multiple) {
           onChange(state.values);
         } else {
-            console.log(state.values[0]);
-            console.log(onChange);
           onChange(state.values[0]);
         }
       });
