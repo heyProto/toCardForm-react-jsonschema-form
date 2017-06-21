@@ -2,7 +2,6 @@ import ArrayField from "./ArrayField";
 import BooleanField from "./BooleanField";
 import ColorField from "./ColorField";
 import DescriptionField from "./DescriptionField";
-import ImageField from "./ImageField";
 import NumberField from "./NumberField";
 import ObjectField from "./ObjectField";
 import SchemaField from "./SchemaField";
@@ -15,7 +14,6 @@ export default {
   BooleanField,
   ColorField,
   DescriptionField,
-  ImageField,
   NumberField,
   ObjectField,
   SchemaField,
