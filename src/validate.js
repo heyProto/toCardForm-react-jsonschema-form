@@ -23,6 +23,7 @@ function toErrorSchema(errors) {
     return {};
   }
   return errors.reduce((errorSchema, error) => {
+    console.log(errorSchema);
     const { property, message } = error;
     const path = toPath(property);
     let parent = errorSchema;

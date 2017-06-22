@@ -43,8 +43,9 @@ function Label(props) {
     return <div />;
   }
   return (
-    <label className="control-label" htmlFor={id}>
+    <label className="form-label" htmlFor={id}>
       {required ? label + REQUIRED_FIELD_SYMBOL : label}
+      {props.description}
     </label>
   );
 }
@@ -56,9 +57,9 @@ function Help(props) {
     return <div />;
   }
   if (typeof help === "string") {
-    return <p className="help-block">{help}</p>;
+    return <p className="form-hint">{help}</p>;
   }
-  return <div className="help-block">{help}</div>;
+  return <div className="form-hint">{help}</div>;
 }
 
 function ErrorList(props) {
@@ -71,7 +72,7 @@ function ErrorList(props) {
       <p />
       <ul className="error-detail bs-callout bs-callout-info">
         {errors.map((error, index) => {
-          return <li className="text-danger" key={index}>{error}</li>;
+          return <li className="form-error-message" key={index}>{error}</li>;
         })}
       </ul>
     </div>
@@ -94,11 +95,9 @@ function DefaultTemplate(props) {
   if (hidden) {
     return children;
   }
-
   return (
     <div className={classNames}>
-      {displayLabel && <Label label={label} required={required} id={id} />}
-      {displayLabel && description ? description : null}
+      {displayLabel && <Label label={label} description = {description} required={required} id={id} />}
       {children}
       {errors}
       {help}
@@ -204,22 +203,40 @@ function SchemaFieldRender(props) {
   const errors = __errors;
   const help = uiSchema["ui:help"];
   const hidden = uiSchema["ui:widget"] === "hidden";
-  const classNames = [
-    "form-group",
-    "field",
-    `field-${type}`,
-    errors && errors.length > 0 ? "field-error has-error has-danger" : "",
-    uiSchema.classNames,
-  ]
-    .join(" ")
-    .trim();
-
+  var classNames;
+  if(schema.type !== "object" && schema.type !== "array"){
+    classNames = [
+      "form-group",
+      "field",
+      `field-${type}`,
+      errors && errors.length > 0 ? "field-error has-error has-danger" : "",
+      uiSchema.classNames,
+    ]
+      .join(" ")
+      .trim();
+    }else{
+      classNames = [
+      "field",
+      `field-${type}`,
+      errors && errors.length > 0 ? "field-error has-error has-danger" : "",
+      uiSchema.classNames,
+    ]
+      .join(" ")
+      .trim();
+    }
+  var isString;
+  if(schema.type !== "object" && schema.type !== "array"){
+    isString = true;
+  }else{
+    isString = false;
+  }
   const fieldProps = {
     description: (
       <DescriptionField
         id={id + "__description"}
         description={description}
         formContext={formContext}
+        isString = {isString}
       />
     ),
     rawDescription: description,

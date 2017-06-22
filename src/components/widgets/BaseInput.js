@@ -17,6 +17,12 @@ function BaseInput(props) {
     ...inputProps
   } = props;
   var error = false;
+  var inputClass = "form-textbox";
+  if(schema.type === "integer"){
+    inputClass = "form-textbox small-input";
+  }else if(schema.type === "color"){
+    inputClass = "";
+  }
   if(props.required === true && (props.value === undefined || props.value === "")){
     error = true;
   }
@@ -26,7 +32,7 @@ function BaseInput(props) {
   };
   return (
     <input
-      className = "form-control"
+      className = {inputClass}
       readOnly={readonly}
       disabled={disabled}
       autoFocus={autofocus}

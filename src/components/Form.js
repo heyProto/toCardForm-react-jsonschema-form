@@ -165,6 +165,7 @@ export default class Form extends Component {
     const registry = this.getRegistry();
     const _SchemaField = registry.fields.SchemaField;
     return (
+    <div className ="form-container">
       <form
         className={className ? className : "rjsf"}
         id={id}
@@ -177,7 +178,6 @@ export default class Form extends Component {
         acceptCharset={acceptcharset}
         noValidate={noHtml5Validate}
         onSubmit={this.onSubmit}>
-        {this.renderErrors()}
         <_SchemaField
           schema={schema}
           uiSchema={uiSchema}
@@ -192,9 +192,10 @@ export default class Form extends Component {
         {children
           ? children
           : <p>
-              <button type="submit" className="btn btn-info">Submit</button>
+              <button type="submit" className="default-button primary-button">Submit</button>
             </p>}
       </form>
+    </div>
     );
   }
 }
