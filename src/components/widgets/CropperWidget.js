@@ -80,7 +80,6 @@ export default class CropperWidget extends Component {
     });
   }
   saveData = ()=>{
-    console.log(this.state,this.props);
     this.props.onch(this.state.cropResult);
   }
   render() {
@@ -92,7 +91,7 @@ export default class CropperWidget extends Component {
                   <input type="url" onChange={this.onChangeURL} />
                   <br />
                   <br />
-                  <button onClick={()=>{this.loadImage(this.state.url)}} className = "btn">
+                  <button type = "button" onClick={()=>{this.loadImage(this.state.url)}} className = "btn">
                       Load Image
                   </button>
                   </div>
@@ -105,7 +104,7 @@ export default class CropperWidget extends Component {
             <input type="url" onChange={this.onChangeURL} />
             <br/>
             <br/>
-            <button onClick={()=>{this.loadImage(this.state.url)}} className = "btn">
+            <button type = "button" onClick={()=>{this.loadImage(this.state.url)}} className = "btn">
               Load Image
             </button>
             <br />
@@ -127,7 +126,7 @@ export default class CropperWidget extends Component {
           <div>
             <div className="box" style={{ width: '50%'}}>
               <h1>
-                <button onClick={this.cropImage} className = "btn">
+                <button type = "button" onClick={this.cropImage} className = "btn">
                   Crop Image
                 </button>
               </h1>
@@ -172,7 +171,7 @@ export default class CropperWidget extends Component {
           <div>
             <div className="box" style={{ width: '50%'}}>
               <h1>
-                <button onClick={this.cropImage} className = "btn">
+                <button type = "button" onClick={this.cropImage} className = "btn">
                   Crop Image
                 </button>
               </h1>
@@ -186,7 +185,7 @@ export default class CropperWidget extends Component {
       if(this.state.cropResult === null){
         return (
         <div>
-          <button onClick={this.handleOpenModal} className = "default-button">Upload an Image</button>
+          <button type = "button" onClick={this.handleOpenModal} className = "default-button">Upload an Image</button>
           <Modal style={{overlay: {
           width: "980px",
           position:"absolute",
@@ -201,20 +200,21 @@ export default class CropperWidget extends Component {
           display: "inline-block",
           zIndex: 10}}} isOpen={this.state.showModal}
           contentLabel="Minimal Modal Example">
+          <div style = {{position:"absolute",right:"1",top:"7"}}>
+            <button button = "button" className="circular ui icon button"  onClick={this.handleCloseModal} style = {{ backgroundColor:"white"}}>
+              <i className ="remove icon" style = {{ color:"black",fontSize:"20px"}}></i>
+            </button>          
+          </div>
             <div className="form-group form-col-4">
               <div className="ui action input">
-                <label className="form-label" htmlFor="root_bio">Enter image URL</label><br/><br/>
-                <div className>
                   <input type ="url" onChange = {this.onChangeURL} placeholder="Enter a URL"/>
-                  <button className ="ui button" onClick={()=>{this.loadImage(this.state.url)}} >Upload</button>
-                </div>
+                  <button type = "button" className ="ui button" onClick={()=>{this.loadImage(this.state.url)}} >Upload</button>
               </div>
             </div>
             <span>{'\u00A0'} Or {'\u00A0'}</span>
             <div className="form-group form-col-4">
                 <input type = "file" id="file" name = "file" style = {{ display: 'none' }} onChange={this.onChangeFile}/>
-                <label className="form-label" htmlFor="root_bio" onClick={()=>{this.loadImage(this.state.url)}}>Upload</label>
-                <button type="button" htmlFor = "file" className="default-button" onClick = {this.chooseFile}>Choose image</button>
+                <button type="button" htmlFor = "file" className="default-button" onClick = {this.chooseFile}>Upload an image</button>
             </div>
             <div className="form-clearfix"></div>
             <div className="form-col-6">
@@ -242,14 +242,13 @@ export default class CropperWidget extends Component {
                 </div>
                 <button type="button" className="default-button disabled-button">Save</button>
             </div>
-            <button onClick={this.handleCloseModal}>Close Modal</button>
           </Modal>
         </div>
         );
       }
       return (
       <div>
-          <button onClick={this.handleOpenModal} className = "default-button">Upload an Image</button>
+          <button type = "button" onClick={this.handleOpenModal} className = "default-button">Upload an Image</button>
           <Modal style={{overlay: {
           width: "980px",
           padding: "15px",
@@ -264,18 +263,21 @@ export default class CropperWidget extends Component {
           display: "inline-block",
           zIndex: 10}}} isOpen={this.state.showModal}
            contentLabel="Minimal Modal Example">
+           <div style = {{position:"absolute",right:"1",top:"7"}}>
+            <button type = "button" className="circular ui icon button"  onClick={this.handleCloseModal} style = {{ backgroundColor:"white"}}>
+              <i className ="remove icon" style = {{ color:"black",fontSize:"20px"}}></i>
+            </button>          
+          </div>
             <div className="form-group form-col-4">
               <div className="ui action input">
-                <label className="form-label" for="root_bio">Enter image URL</label><br/><br/>
                 <input type ="url" onChange = {this.onChangeURL} placeholder="Enter a URL"/>
-                <button className ="ui button" onClick={()=>{this.loadImage(this.state.url)}} >Upload</button>
+                <button type = "button" className ="ui button" onClick={()=>{this.loadImage(this.state.url)}} >Upload</button>
               </div>
             </div>
             <span>{'\u00A0'} Or {'\u00A0'}</span>
             <div className="form-group form-col-4">
                 <input type = "file" id="file" name = "file" style = {{ display: 'none' }} onChange={this.onChangeFile}/>
-                <label className="form-label" htmlFor="root_bio">Upload</label>
-                <button type="button" htmlFor = "file" className="default-button" onClick = {this.chooseFile}>Choose image</button>
+                <button type="button" htmlFor = "file" className="default-button" onClick = {this.chooseFile}>Upload an image</button>
             </div>
             <div className="form-clearfix"></div>
             <div className="form-col-6">
@@ -304,7 +306,6 @@ export default class CropperWidget extends Component {
                 </div>
                 <button type="button" className="default-button" onClick = {this.saveData}>Save</button>
             </div>
-            <button onClick={this.handleCloseModal}>Close Modal</button>
           </Modal>
         </div>
       );
