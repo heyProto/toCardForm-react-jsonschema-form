@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-
+import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 import {
   getWidget,
   getDefaultFormState,
@@ -14,6 +14,21 @@ import {
   toIdSchema,
   getDefaultRegistry,
 } from "../../utils";
+
+const SortableItem = SortableElement(({value}) =>{
+  return <div>{value}</div>
+});
+
+const SortableList = SortableContainer(({items}) => {
+  console.log(items);
+  return (
+    <div>
+      {items.map((value, index) => (
+        <SortableItem key={`item-${index}`} index={index} value={value} />
+      ))}
+    </div>
+  );
+});
 
 function ArrayFieldTitle({ TitleField, idSchema, title, required }) {
   if (!title) {
@@ -53,11 +68,12 @@ function DefaultArrayItem(props) {
     paddingRight: 6,
     fontWeight: "bold",
   };
+  console.log("Hello");
   return (
     <div key={props.index} className={props.className}>
 
       <div className={props.hasToolbar ? "col-xs-9" : "col-xs-12"}>
-        {props.children}
+        {props.value}
       </div>
 
       {props.hasToolbar &&
@@ -175,6 +191,12 @@ function DefaultNormalArrayFieldTemplate(props) {
 }
 
 class ArrayField extends Component {
+  constructor(){
+    super();
+    this.state = {
+      items:[]
+    }
+  }
   static defaultProps = {
     uiSchema: {},
     formData: [],
@@ -184,7 +206,27 @@ class ArrayField extends Component {
     readonly: false,
     autofocus: false,
   };
+  
+  componentWillReceiveProps(nextProps){
 
+    var arr = nextProps.formData.map((value)=>{
+      var pro = {
+        onDropIndexClick:this.onDropIndexClick,
+        onReorderClick:this.onReorderClick,
+        value:value
+      }
+      console.log(DefaultArrayItem(pro));
+      return DefaultArrayItem(value);
+    });
+    this.setState({
+      items:arr
+    });
+  }
+  onSortEnd = ({oldIndex, newIndex}) => {
+    this.setState({
+      items: arrayMove(this.state.items, oldIndex, newIndex),
+    });
+  };
   get itemTitle() {
     const { schema } = this.props;
     return schema.items.title || schema.items.description || "Item";
@@ -334,8 +376,31 @@ class ArrayField extends Component {
     };
 
     // Check if a custom render function was passed in
+    console.log(this.state.items);
     const Component = ArrayFieldTemplate || DefaultNormalArrayFieldTemplate;
-    return <Component {...arrayProps} />;
+    return (
+    <fieldset className={this.props.className}>
+      <ArrayFieldTitle
+        key={`array-field-title-${this.props.idSchema.$id}`}
+        TitleField={this.props.TitleField}
+        idSchema={this.props.idSchema}
+        title={this.props.title}
+        required={this.props.required}
+      />
+      {this.props.schema.description &&
+        <ArrayFieldDescription
+          key={`array-field-description-${this.props.idSchema.$id}`}
+          DescriptionField={this.props.DescriptionField}
+          idSchema={this.props.idSchema}
+          description={this.props.schema.description}
+      />}
+    <SortableList items={this.state.items} onSortEnd={this.onSortEnd} />
+      {<AddButton
+          onClick={this.onAddClick}
+          disabled={this.props.disabled || this.props.readonly}
+        />}
+    </fieldset>
+    );
   }
 
   renderMultiSelect() {
