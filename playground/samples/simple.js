@@ -47,7 +47,7 @@ module.exports = {
     "image":{
       "type":"image",
       "title":"Upload an Image: ",
-      "ratio":"1:1" 
+      "ratio":"2/1" 
     }
   }
 },
