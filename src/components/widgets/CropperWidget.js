@@ -193,7 +193,6 @@ export default class CropperWidget extends Component {
           boxShadow: "0px 10px 20px #efefef",
           borderRadius: "4px",
           display: "inline-block",
-          position: "relative",
           zIndex: 10}}} isOpen={this.state.showModal}
            contentLabel="Minimal Modal Example">
             <div className="form-group form-col-4">
