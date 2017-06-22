@@ -35,17 +35,6 @@ module.exports = {
           path.join(__dirname, "playground"),
           path.join(__dirname, "node_modules"),
         ],
-      },
-      {
-        test: /\.css$/,
-        loader: 'style-loader'
-      }, {
-        test: /\.css$/,
-        loader: 'css-loader',
-        query: {
-          modules: true,
-          localIdentName: '[name]__[local]___[hash:base64:5]'
-        }
       }
     ]
   }
