@@ -7,7 +7,6 @@ function DescriptionField(props) {
     // See #312: Ensure compatibility with old versions of React.
     return <div />;
   }
-  console.log(props);
   if (props.isString) {
     return <span id={id} className="form-lable-hint">{description}</span>;
   } else {
