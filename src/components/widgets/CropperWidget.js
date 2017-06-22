@@ -58,11 +58,13 @@ export default class CropperWidget extends Component {
     this.setState({
       cropResult: data,
     });
-    //this.props.onch(data);
+    this.props.onch(data);
   }
   loadImage( src ){
     var file = document.getElementById("file");
-    file.value = "";
+    if(file !== null){
+      file.value = "";
+    }
     this.setState({
         src:src,
         cropResult:null
@@ -101,6 +103,9 @@ export default class CropperWidget extends Component {
             <br />
             <br />
             <Cropper
+              viewMode={2}
+              background = {false}
+              modal = {true}
               checkCrossOrigin={true}
               style={{ height: 200, width: '50%' }}
               preview=".img-preview"
@@ -118,7 +123,7 @@ export default class CropperWidget extends Component {
                   Crop Image
                 </button>
               </h1>
-              <img style={{ width: '100%' }} src={this.state.cropResult} crossOrigin = "gaurav" alt="cropped image" />
+              { (this.state.cropResult === null)? "" :<img style={{ width: '70%',border:"1px solid black"}} src={this.state.cropResult} alt="cropped image" />}
             </div>
           </div>
           <br style={{ clear: 'both' }} />
@@ -144,6 +149,9 @@ export default class CropperWidget extends Component {
             <br />
             <br />
             <Cropper
+              viewMode={2}
+              background = {false}
+              modal = {true}
               style={{ height: 200, width: '50%' }}
               preview=".img-preview"
               aspectRatio = {eval(this.props.ratio)}
@@ -160,7 +168,7 @@ export default class CropperWidget extends Component {
                   Crop Image
                 </button>
               </h1>
-              <img style={{ width: '100%' }} src={this.state.cropResult} alt="cropped image" />
+              { (this.state.cropResult === null)? "" :<img style={{ width: '70%',border:"1px solid black"}} src={this.state.cropResult} alt="cropped image" />}
             </div>
           </div>
           <br style={{ clear: 'both' }} />
@@ -175,8 +183,8 @@ export default class CropperWidget extends Component {
         }
         return (
         <div>
-          <button onClick={this.handleOpenModal}>Trigger Modal</button>
-          <Modal style={{overlay: {zIndex: 10}}} isOpen={this.state.showModal}
+          <button onClick={this.handleOpenModal} className = "default-button">Upload an Image</button>
+          <Modal overlayClassName = {{ afterOpen: 'modal-container'}} isOpen={this.state.showModal}
            contentLabel="Minimal Modal Example">
             <div>
               <div className = "check" style={{ width: '100%' }}>
@@ -200,8 +208,8 @@ export default class CropperWidget extends Component {
       }
       return (
       <div>
-        <button onClick={this.handleOpenModal}>Trigger Modal</button>
-        <Modal style={{overlay: {zIndex: 10}}} isOpen={this.state.showModal}
+        <button onClick={this.handleOpenModal}  className = "default-button">Upload an Image</button>
+        <Modal isOpen={this.state.showModal}
            contentLabel="Minimal Modal Example">
           <div>
             <div className = "check" style={{ width: '100%' }}>

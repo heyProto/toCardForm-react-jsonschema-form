@@ -2,6 +2,7 @@ import React from "react";
 
 export default function ErrorList(props) {
   const { errors } = props;
+  console.log(props);
   return (
     <div className="panel panel-danger errors">
       <div className="panel-heading">
@@ -10,7 +11,7 @@ export default function ErrorList(props) {
       <ul className="list-group">
         {errors.map((error, i) => {
           return (
-            <li key={i} className="list-group-item text-danger">
+            <li key={i} className="form-error-message">
               {error.stack}
             </li>
           );

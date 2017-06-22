@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
+
+body{
+    font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    letter-spacing: 0.5px;
+    font-size: 14px;
+}
+
+.container{
+    width: 980px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 50px;
+    margin-bottom: 50px;
+}
+
+.form-container{
+    width: 400px;
+    box-sizing: border-box;
+}
+
+.modal-container{
+    width: 980px;
+    padding: 15px;
+    border: 1px solid #efefef;
+    box-shadow: 0px 10px 20px #efefef;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+
+/*======== grid =========*/
+.form-col-4{
+    width: 33.33%;
+    position: relative;
+    display: inline-block;
+    box-sizing: content-box;
+}
+
+.form-col-6{
+    width: 50%;
+    position: relative;
+    display: inline-block;
+    box-sizing: content-box;
+    float: left;
+}
+
+/*===== grouping the form =====*/
+fieldset{
+    border: 0px;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    overflow: hidden;
+}
+
+/*===== Lable and legends =====*/
+legend{
+    font-weight: 700;
+    font-size: 1.7em;
+    border-bottom: 1px solid #efefef;
+    width: 100%;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
+.form-sub-heading{
+    font-size: 1.2em;
+    font-weight: 700;
+}
+
+fieldset p{
+    font-size: 1em;
+    color: #333;
+    font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    /*margin: 0px;*/
+}
+
+.form-label{
+    font-size: 0.8em;
+    color: #aaa;
+    display: inline-block;
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+.form-lable-hint{
+    color: #999;
+    margin-left: 5px;
+    font-weight: 300;
+}
+
+.form-hint{
+    color: #999;
+    font-weight: 300;
+    font-size: 0.8em;
+}
+
+.form-error-message{
+    color: #F44336;
+    /*font-weight: 300;*/
+    font-size: 0.8em;
+    margin-top: 5px;
+}
+
+
+/*===== input styles ======*/
+
+.form-textbox{
+    /*background: red;*/
+    border: 1px solid rgba(34,36,38,.15);
+    border-radius: 4px;
+    width: 100%;
+    padding: 7px 10px;
+    font-size: 1em;
+    transition: box-shadow 0.2s ease-in-out;
+    box-sizing: border-box;
+    color: #333;
+}
+
+.form-textbox:focus, .form-dropdown:focus{
+    outline: none;
+    border: 1px solid #3ba0f9;
+    box-shadow: 0px 3px 5px lightgrey;
+}
+
+.small-input{
+    width: 100px;
+}
+
+.medium-input{
+    /*width: 300px;*/
+}
+
+textarea{
+    min-height: 100px;
+}
+
+input[type="color"]{
+    display: block;
+    width: 100px;
+    height: 36px;
+    border: 0px solid #efefef;
+    outline: none;
+    background: transparent;
+    padding: 0px;
+    overflow: hidden;
+    margin-left: -2px;
+    margin-top: -5px;
+}
+
+.form-dropdown{
+    -webkit-appearance: none;
+    padding: 7px 10px;
+    font-size: 1em;
+    background: white;
+    border:  1px solid rgba(34,36,38,.15);
+    border-radius: 4px;
+    width: 100%;
+    position: relative;
+}
+
+
+.form-dropdown:before{
+    content: "";
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #f00;
+}
+
+.form-dropdown:after{
+    content: "";
+    position: absolute;
+    right: 10px;
+    top: 3px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #333;
+}
+
+
+/*========= form group ========*/
+.form-group{
+    margin-bottom: 15px;
+}
+
+.form-group:hover .form-label{
+    color: #333;
+}
+
+.form-group:hover .form-textbox{
+    border: 1px solid rgba(59, 160, 249, 0.8);
+}
+
+.form-group:hover .form-dropdown{
+    border: 1px solid rgba(59, 160, 249, 0.8);
+}
+
+
+/*========= buttons ===========*/
+.default-button{
+    padding: 7px 12px;
+    font-size: 1em;
+    background: white;
+    border:  1px solid rgba(34,36,38,.15);
+    border-radius: 4px;
+    /*width: 100%;*/
+    position: relative;
+    cursor: pointer;
+}
+
+
+.default-button:hover{
+    border: 1px solid rgba(59, 160, 249, 0.8);
+}
+
+.primary-button{
+    background: #2196F3;
+    color: white;
+    border: 1px solid #2196F3 !important;
+}
+
+.disabled-button{
+    background: #efefef;
+    color: #ccc;
+    border: 1px solid #efefef;
+}
+
+.form-clearfix{
+    width: 100%;
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.image-crop-area, .image-display-area{
+    min-height: 300px;
+    background: #fafafa;
+    padding: 0px 15px;
+    margin-bottom: 10px;
+}

@@ -481,15 +481,9 @@ class App extends Component {
               onError={log("errors")}>
               <div className="row">
                 <div className="col-sm-3">
-                  <button className="btn btn-primary" type="submit">
-                    Submit
-                  </button>
+                  <button type="button" className="default-button primary-button">Submit</button>
                 </div>
                 <div className="col-sm-9 text-right">
-                  <CopyLink
-                    shareURL={this.state.shareURL}
-                    onShare={this.onShare}
-                  />
                 </div>
               </div>
             </Form>}
