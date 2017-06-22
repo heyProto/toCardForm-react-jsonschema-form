@@ -46,6 +46,7 @@
     "lodash.topath": "^4.5.2",
     "prop-types": "^15.5.8",
     "react-cropper": "^0.12.0",
+    "react-modal": "^2.0.6",
     "semantic-ui-css": "^2.2.10",
     "semantic-ui-react": "^0.68.5",
     "setimmediate": "^1.0.5",
