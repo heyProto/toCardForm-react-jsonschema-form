@@ -58,6 +58,7 @@ export default class CropperWidget extends Component {
     this.setState({
       cropResult: data,
     });
+        this.props.onch(data);
   }
   chooseFile(){
     var file = document.getElementById('file');
@@ -182,29 +183,37 @@ export default class CropperWidget extends Component {
         </div>
       );
     }else{
-      if(this.state.src === null){
+      if(this.state.cropResult === null){
         return (
         <div>
           <button onClick={this.handleOpenModal} className = "default-button">Upload an Image</button>
           <Modal style={{overlay: {
           width: "980px",
+          position:"absolute",
+          left:"50%",
+          top:"50%",
+          height:"100%",
+          transform: "translate(-50%, -50%)",
           padding: "15px",
           border: "1px solid #efefef",
           boxShadow: "0px 10px 20px #efefef",
           borderRadius: "4px",
           display: "inline-block",
           zIndex: 10}}} isOpen={this.state.showModal}
-           contentLabel="Minimal Modal Example">
+          contentLabel="Minimal Modal Example">
             <div className="form-group form-col-4">
               <div className="ui action input">
-                <input type ="text" placeholder="Enter a URL"/>
-                <button className ="ui button" onClick={()=>{this.loadImage(this.state.url)}} >Upload</button>
+                <label className="form-label" htmlFor="root_bio">Enter image URL</label><br/><br/>
+                <div className>
+                  <input type ="url" onChange = {this.onChangeURL} placeholder="Enter a URL"/>
+                  <button className ="ui button" onClick={()=>{this.loadImage(this.state.url)}} >Upload</button>
+                </div>
               </div>
             </div>
             <span>{'\u00A0'} Or {'\u00A0'}</span>
             <div className="form-group form-col-4">
                 <input type = "file" id="file" name = "file" style = {{ display: 'none' }} onChange={this.onChangeFile}/>
-                <label className="form-label" htmlFor="root_bio">Upload</label>
+                <label className="form-label" htmlFor="root_bio" onClick={()=>{this.loadImage(this.state.url)}}>Upload</label>
                 <button type="button" htmlFor = "file" className="default-button" onClick = {this.chooseFile}>Choose image</button>
             </div>
             <div className="form-clearfix"></div>
@@ -244,6 +253,11 @@ export default class CropperWidget extends Component {
           <Modal style={{overlay: {
           width: "980px",
           padding: "15px",
+          position:"absolute",
+          left:"50%",
+          top:"50%",
+          height:"100%",
+          transform: "translate(-50%, -50%)",
           border: "1px solid #efefef",
           boxShadow: "0px 10px 20px #efefef",
           borderRadius: "4px",
@@ -252,7 +266,8 @@ export default class CropperWidget extends Component {
            contentLabel="Minimal Modal Example">
             <div className="form-group form-col-4">
               <div className="ui action input">
-                <input type ="text" placeholder="Enter a URL"/>
+                <label className="form-label" for="root_bio">Enter image URL</label><br/><br/>
+                <input type ="url" onChange = {this.onChangeURL} placeholder="Enter a URL"/>
                 <button className ="ui button" onClick={()=>{this.loadImage(this.state.url)}} >Upload</button>
               </div>
             </div>
@@ -287,7 +302,7 @@ export default class CropperWidget extends Component {
                     Image display area
                     { (this.state.cropResult === null)? "" :<img style={{ width: '100%',border:"2px solid black"}} src={this.state.cropResult} alt="cropped image" />}
                 </div>
-                <button type="button" className="default-button disabled-button" onClick = {this.saveData}>Save</button>
+                <button type="button" className="default-button" onClick = {this.saveData}>Save</button>
             </div>
             <button onClick={this.handleCloseModal}>Close Modal</button>
           </Modal>
