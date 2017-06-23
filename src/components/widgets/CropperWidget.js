@@ -11,7 +11,7 @@ export default class CropperWidget extends Component {
       cropResult: null,
       url:null,
       showModal:false,
-      zoom:0
+      zoom:0.1
     };
     this.cropImage = this.cropImage.bind(this);
     this.cropModal = this.cropModal.bind(this);
@@ -56,6 +56,7 @@ export default class CropperWidget extends Component {
     if (typeof this.cropper.getCroppedCanvas() === 'undefined') {
       return;
     }
+    
     const data = this.cropper.getCroppedCanvas().toDataURL();
     this.setState({
       cropResult: data,
@@ -67,8 +68,11 @@ export default class CropperWidget extends Component {
       return;
     }
     const data = this.cropper.getCroppedCanvas().toDataURL();
+    this.props.onch(data);
     this.setState({
-      cropResult: data,
+      cropResult:null,
+      src:null,
+      showModal:false
     });
   }
   chooseFile(){
@@ -90,15 +94,7 @@ export default class CropperWidget extends Component {
         src:null
     });
   }
-  saveData = ()=>{
-    var data = this.state.cropResult;
-    this.props.onch(data);
-    this.setState({
-      cropResult:null,
-      src:null,
-      showModal:false
-    });
-  }
+
   zoom = ()=>{
     var zoomVal = document.getElementById("zoom");
     var value = zoomVal.value;
@@ -219,7 +215,7 @@ export default class CropperWidget extends Component {
         <div>
           <button type = "button" onClick={this.handleOpenModal} className = "default-button">Upload an Image</button>
           <Modal style={{overlay: {
-          width: "980px",
+          width: "590px",
           position:"absolute",
           left:"50%",
           top:"50%",
@@ -246,38 +242,17 @@ export default class CropperWidget extends Component {
                   <button type = "button" className ="ui button" onClick={()=>{this.loadImage(this.state.url)}} >Upload</button>
               </div>
             </div>
-            <span style = {{ marginLeft:"-40px"}}>{'\u00A0'} Or {'\u00A0'}</span>
+            <span style = {{ marginLeft:"100px"}}>{'\u00A0'} Or {'\u00A0'}</span>
             <div className="form-group form-col-4">
                 <input type = "file" id="file" name = "file" style = {{ display: 'none' }} onChange={this.onChangeFile}/>
                 <button type="button" htmlFor = "file" style = {{padding:"9px 12px"}} className="default-button" onClick = {this.chooseFile}>Upload an image</button>
             </div>
             <div className="form-clearfix"></div>
-            <div className="form-col-6">
+            <div className="form-col-12">
                 <div className="image-crop-area">
                     Image crop area
-                    <Cropper
-                      zoomOnWheel={false}
-                      zoomOnTouch={false}
-                      viewMode={2}
-                      background = {false}
-                      modal = {true}
-                      checkCrossOrigin={true}
-                      style={{ height: 300, width: '100%' }}
-                      preview=".img-preview"
-                      aspectRatio = {eval(this.props.ratio)}
-                      guides={true}
-                      movable = {true}
-                      src={this.state.src}
-                      ref={cropper => { this.cropper = cropper; }}
-                    />
                 </div>
                 <button type="button" className="default-button primary-button" onClick={this.cropModal}>Crop image</button>
-            </div>
-            <div className="form-col-6">
-                <div className="image-display-area">
-                    Image display area
-                </div>
-                <button disabled type="button" className="default-button disabled-button" style = {{marginTop:"32px"}}>Save</button>
             </div>
           </Modal>
         </div>
@@ -287,7 +262,7 @@ export default class CropperWidget extends Component {
       <div>
           <button type = "button" onClick={this.handleOpenModal} className = "default-button">Upload an Image</button>
           <Modal style={{overlay: {
-            width: "980px",
+            width: "590px",
             height:"500px",
             padding: "15px",
             position:"absolute",
@@ -315,41 +290,38 @@ export default class CropperWidget extends Component {
                 <button type = "button" className ="ui button" onClick={()=>{this.loadImage(this.state.url)}} >Upload</button>
               </div>
             </div>
-            <span style = {{ marginLeft:"-40px"}}>{'\u00A0'} Or {'\u00A0'}</span>
+            <span style = {{ marginLeft:"100px"}}>{'\u00A0'} Or {'\u00A0'}</span>
             <div className="form-group form-col-4">
                 <input type = "file" id="file" name = "file" style = {{ display: 'none' }} onChange={this.onChangeFile}/>
                 <button type="button" htmlFor = "file" style = {{paddingTop:"9px 12px"}} className="default-button" onClick = {this.chooseFile}>Upload an image</button>
             </div>
             <div className="form-clearfix"></div>
-            <div className="form-col-6">
+            <div className="form-col-12">
                 <div className="image-crop-area">
                     Image crop area
                     <Cropper
+                      cropBoxResizable = {false}
+                      toggleDragModeOnDblclick = {false}
+                      dragMode='move'
+                      cropBoxMovable = {false}
                       zoomOnWheel={false}
                       zoomOnTouch={false}
-                      viewMode={2}
+                      viewMode={1}
                       background = {false}
                       modal = {true}
                       checkCrossOrigin={true}
                       style={{ height: 300, width: '100%' }}
                       preview=".img-preview"
                       aspectRatio = {eval(this.props.ratio)}
-                      guides={true}
+                      guides={false}
                       movable = {true}
                       src={this.state.src}
                       ref={cropper => { this.cropper = cropper; }}
-                      zoomTo = {this.state.zoom}
+                      zoomTo= {this.state.zoom}
                     />
-                    <i className ="zoom out icon" ></i><i className ="zoom icon" style = {{ position:"absolute",right:"0"}}>  </i><input type = "range"  min="0" max="2" step="0.05" value={this.state.zoom} onChange = {this.zoom} id = "zoom" style={{width:"98%"}}/>
+                    <i style = {{ fontSize:"10px"}}className ="image icon"></i><i className ="image icon" style = {{ fontSize:"17px", position:"absolute",right:"40"}}>  </i><input type = "range"  min="0.1" max="2" step="0.05" value={this.state.zoom} onChange = {this.zoom} id = "zoom" style={{width:"98%"}}/>
                 </div>
-                <button type="button" className="default-button primary-button" onClick={this.cropModal}>Crop image</button>
-            </div>
-            <div className="form-col-6">
-                <div className="image-display-area">
-                    Image display area
-                    { (this.state.cropResult === null)? "" :<img style={{ width: '100%',border:"2px solid black"}} src={this.state.cropResult} alt="cropped image" />}
-                </div>
-                {(this.state.cropResult === null) ? <button disabled type="button" className="default-button disabled-button" style = {{marginTop:"32px"}}>Save</button> : <button onClick = {this.saveData} type="button" className="default-button" style = {{marginTop:"32px"}}>Save</button>}
+                <button type="button" style = {{marginTop:"-20px"}} className="default-button primary-button" onClick={this.cropModal}>Crop image</button>
             </div>
           </Modal>
         </div>

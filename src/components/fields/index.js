@@ -9,9 +9,11 @@ import StringField from "./StringField";
 import TitleField from "./TitleField";
 import UnsupportedField from "./UnsupportedField";
 import ImageField from "./ImageField";
+import TextareaField from "./TextareaField";
 
 export default {
   ArrayField,
+  TextareaField,
   BooleanField,
   ColorField,
   DescriptionField,

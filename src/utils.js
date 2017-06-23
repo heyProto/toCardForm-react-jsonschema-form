@@ -20,7 +20,6 @@ const widgetMap = {
     "data-url": "FileWidget",
     radio: "RadioWidget",
     select: "SelectWidget",
-    textarea: "TextareaWidget",
     hidden: "HiddenWidget",
     date: "DateWidget",
     datetime: "DateTimeWidget",
@@ -55,6 +54,9 @@ const widgetMap = {
   },
   image:{
     image: "ImageWidget",
+  },
+  textarea:{
+    textarea:"TextareaWidget",
   }
 };
 
