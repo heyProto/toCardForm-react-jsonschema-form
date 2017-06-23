@@ -15,14 +15,15 @@ import {
   getDefaultRegistry,
 } from "../../utils";
 
-const DragHandle = SortableHandle(() => <span>::</span>);
+const DragHandle = SortableHandle(() => <span><i style = {{marginTop:"8px"}}className ="move icon"></i>
+</span>);
 
 const SortableItem = SortableElement((val) =>{
   var props = val.value;
   return(
       <div className={props.hasToolbar ? "col-xs-9" : "col-xs-12"} key={props.index} >
         <DragHandle />
-        <IconBtn type="danger" icon="remove" className="array-item-remove" tabIndex="-1" disabled={props.disabled || props.readonly} onClick={props.onDropIndexClick(props.index)}/>
+        <RemoveBtn type="danger" icon="remove" style = {{ }}  tabIndex="-1" disabled={props.disabled || props.readonly} onClick={props.onDropIndexClick(props.index)}/>
         {props.children}
       </div>
     );
@@ -94,7 +95,18 @@ function IconBtn(props) {
     </button>
   );
 }
-
+function RemoveBtn(props){
+  const { type = "default", icon, className, ...otherProps } = props;
+  return (
+    <button
+      type="button"
+      style = {{fontSize:"20"}}
+      className={`default-button delete-button`}
+      {...otherProps}>
+      <i style = {{color:"red"}} className={`glyphicon glyphicon-${icon}`} />
+    </button>
+  );
+}
 // Used in the two templates
 function DefaultArrayItem(props) {
   const btnStyle = {
@@ -412,7 +424,7 @@ class ArrayField extends Component {
 
     // Check if a custom render function was passed in
     const Component = ArrayFieldTemplate || DefaultNormalArrayFieldTemplate;
-    if(isDraggable === true ){
+    if(isDraggable === undefined ){
       return <SortableList {...arrayProps}/>;
     }else{
       return <Component {...arrayProps}/>;

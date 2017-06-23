@@ -15,7 +15,7 @@ body{
 }
 
 .form-container{
-    width: 400px;
+    width: 500px;
     box-sizing: border-box;
 }
 
@@ -50,7 +50,7 @@ fieldset{
     border: 0px;
     position: relative;
     display: inline-block;
-    width: 100%;
+    width: 98%;
     overflow: hidden;
 }
 
@@ -215,12 +215,19 @@ input[type="color"]{
     position: relative;
     cursor: pointer;
 }
-
+.delete-button{
+    background-color:white;
+    color:red;
+    float:right;
+    border:none;
+}
 
 .default-button:hover{
     border: 1px solid rgba(59, 160, 249, 0.8);
 }
-
+.delete-button:hover{
+    border: none;
+}
 .primary-button{
     background: #2196F3;
     color: white;
