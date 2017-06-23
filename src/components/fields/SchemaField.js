@@ -21,7 +21,8 @@ const COMPONENT_TYPES = {
   number: "NumberField",
   object: "ObjectField",
   string: "StringField",
-  image: "ImageField"
+  image: "ImageField",
+  textarea: "TextareaField"
 };
 
 function getFieldComponent(schema, uiSchema, fields) {
@@ -33,6 +34,7 @@ function getFieldComponent(schema, uiSchema, fields) {
     return fields[field];
   }
   const componentName = COMPONENT_TYPES[schema.type];
+  console.log(fields,componentName);
   return componentName in fields ? fields[componentName] : UnsupportedField;
 }
 

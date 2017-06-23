@@ -226,7 +226,11 @@ input[type="color"]{
     color: white;
     border: 1px solid #2196F3 !important;
 }
-
+.protograph-primary-button{
+    background: #2196F3;
+    color: white;
+    border: 1px solid #2196F3 !important;
+}
 .disabled-button{
     background: #efefef;
     color: #ccc;

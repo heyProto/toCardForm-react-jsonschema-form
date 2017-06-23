@@ -21,7 +21,7 @@ module.exports = {
       "title": "Age"
     },
     "bio": {
-      "type": "string",
+      "type": "textarea",
       "title": "Bio"
     },
     "password": {
@@ -60,9 +60,6 @@ module.exports = {
     "ui:widget": "updown",
     "ui:title": "Age of person",
     "ui:description": "(earthian year)"
-  },
-  "bio": {
-    "ui:widget": "textarea"
   },
   "password": {
     "ui:widget": "password",
