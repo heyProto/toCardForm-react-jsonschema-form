@@ -91,7 +91,13 @@ export default class CropperWidget extends Component {
     });
   }
   saveData = ()=>{
-    this.props.onch(this.state.cropResult);
+    var data = this.state.cropResult;
+    this.props.onch(data);
+    this.setState({
+      cropResult:null,
+      src:null,
+      showModal:false
+    });
   }
   zoom = ()=>{
     var zoomVal = document.getElementById("zoom");
@@ -334,7 +340,7 @@ export default class CropperWidget extends Component {
                       ref={cropper => { this.cropper = cropper; }}
                       zoomTo = {this.state.zoom}
                     />
-                    <input type = "range"  min="0" max="2" step="0.05" value={this.state.zoom} onChange = {this.zoom} id = "zoom" style={{width:"98%"}}/>
+                    <i className ="zoom out icon" ></i><i className ="zoom icon" style = {{ position:"absolute",right:"0"}}>  </i><input type = "range"  min="0" max="2" step="0.05" value={this.state.zoom} onChange = {this.zoom} id = "zoom" style={{width:"98%"}}/>
                 </div>
                 <button type="button" className="default-button primary-button" onClick={this.cropModal}>Crop image</button>
             </div>
