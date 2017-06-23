@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-
+import {SortableContainer, SortableElement,SortableHandle,arrayMove} from 'react-sortable-hoc';
 import {
   getWidget,
   getDefaultFormState,
@@ -14,6 +14,56 @@ import {
   toIdSchema,
   getDefaultRegistry,
 } from "../../utils";
+
+const DragHandle = SortableHandle(() => <span>::</span>);
+
+const SortableItem = SortableElement((val) =>{
+  var props = val.value;
+  return(
+      <div className={props.hasToolbar ? "col-xs-9" : "col-xs-12"} key={props.index} >
+        <DragHandle />
+        <IconBtn type="danger" icon="remove" className="array-item-remove" tabIndex="-1" disabled={props.disabled || props.readonly} onClick={props.onDropIndexClick(props.index)}/>
+        {props.children}
+      </div>
+    );
+});
+
+const SortableList = SortableContainer((props) => {
+  return (
+    <fieldset className={props.className}>
+
+      <ArrayFieldTitle
+        key={`array-field-title-${props.idSchema.$id}`}
+        TitleField={props.TitleField}
+        idSchema={props.idSchema}
+        title={props.title}
+        required={props.required}
+      />
+
+      {props.schema.description &&
+        <ArrayFieldDescription
+          key={`array-field-description-${props.idSchema.$id}`}
+          DescriptionField={props.DescriptionField}
+          idSchema={props.idSchema}
+          description={props.schema.description}
+        />}
+
+      <div
+        className="row array-item-list"
+        key={`array-item-list-${props.idSchema.$id}`}>
+        {props.items && props.items.map((value, index) => {
+          return (<div><SortableItem key={`item-${index}`} index={index} value={value} /></div>);
+      })}
+      </div>
+
+      {props.canAdd &&
+        <AddButton
+          onClick={props.onAddClick}
+          disabled={props.disabled || props.readonly}
+        />}
+    </fieldset>
+  );
+});
 
 function ArrayFieldTitle({ TitleField, idSchema, title, required }) {
   if (!title) {
@@ -53,6 +103,7 @@ function DefaultArrayItem(props) {
     paddingRight: 6,
     fontWeight: "bold",
   };
+  console.log("Hello");
   return (
     <div key={props.index} className={props.className}>
 
@@ -175,6 +226,12 @@ function DefaultNormalArrayFieldTemplate(props) {
 }
 
 class ArrayField extends Component {
+  constructor(){
+    super();
+    this.state = {
+      items:[]
+    }
+  }
   static defaultProps = {
     uiSchema: {},
     formData: [],
@@ -184,7 +241,26 @@ class ArrayField extends Component {
     readonly: false,
     autofocus: false,
   };
+  
+  componentWillReceiveProps(nextProps){
 
+    var arr = nextProps.formData.map((value)=>{
+      var pro = {
+        onDropIndexClick:this.onDropIndexClick,
+        onReorderClick:this.onReorderClick,
+        value:value
+      }
+      return value;
+    });
+    this.setState({
+      items:arr
+    });
+  }
+  onSortEnd = ({oldIndex, newIndex}) => {
+    this.setState({
+      items: arrayMove(this.state.items, oldIndex, newIndex),
+    });
+  };
   get itemTitle() {
     const { schema } = this.props;
     return schema.items.title || schema.items.description || "Item";
@@ -275,10 +351,11 @@ class ArrayField extends Component {
     if (isMultiSelect(schema)) {
       return this.renderMultiSelect();
     }
-    return this.renderNormalArray();
+
+    return this.renderNormalArray(schema.drag);
   }
 
-  renderNormalArray() {
+  renderNormalArray( isDraggable ) {
     const {
       schema,
       uiSchema,
@@ -335,7 +412,11 @@ class ArrayField extends Component {
 
     // Check if a custom render function was passed in
     const Component = ArrayFieldTemplate || DefaultNormalArrayFieldTemplate;
-    return <Component {...arrayProps} />;
+    if(isDraggable === true ){
+      return <SortableList {...arrayProps}/>;
+    }else{
+      return <Component {...arrayProps}/>;
+    }
   }
 
   renderMultiSelect() {
