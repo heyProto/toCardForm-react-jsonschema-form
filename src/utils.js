@@ -27,6 +27,9 @@ const widgetMap = {
     "alt-date": "AltDateWidget",
     "alt-datetime": "AltDateTimeWidget",
     file: "FileWidget",
+    color:"ColorWidget",
+    textarea:"TextareaWidget",
+    image:"ImageWidget"
   },
   number: {
     text: "TextWidget",

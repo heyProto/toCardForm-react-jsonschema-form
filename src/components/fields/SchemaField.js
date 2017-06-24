@@ -34,7 +34,6 @@ function getFieldComponent(schema, uiSchema, fields) {
     return fields[field];
   }
   const componentName = COMPONENT_TYPES[schema.type];
-  console.log(fields,componentName);
   return componentName in fields ? fields[componentName] : UnsupportedField;
 }
 

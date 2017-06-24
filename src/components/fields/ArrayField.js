@@ -53,7 +53,7 @@ const SortableList = SortableContainer((props) => {
         className="row array-item-list"
         key={`array-item-list-${props.idSchema.$id}`}>
         {props.items && props.items.map((value, index) => {
-          return (<div><SortableItem key={`item-${index}`} index={index} value={value} /></div>);
+          return (<SortableItem key={`item-${index}`} index={index} value={value} />);
       })}
       </div>
 
@@ -240,9 +240,8 @@ function DefaultNormalArrayFieldTemplate(props) {
 class ArrayField extends Component {
   constructor(){
     super();
-    this.state = {
-      items:[]
-    }
+    this.onSortEnd = this.onSortEnd.bind(this);
+
   }
   static defaultProps = {
     uiSchema: {},
@@ -253,25 +252,22 @@ class ArrayField extends Component {
     readonly: false,
     autofocus: false,
   };
-  
-  componentWillReceiveProps(nextProps){
 
-    var arr = nextProps.formData.map((value)=>{
-      var pro = {
-        onDropIndexClick:this.onDropIndexClick,
-        onReorderClick:this.onReorderClick,
-        value:value
-      }
-      return value;
-    });
-    this.setState({
-      items:arr
-    });
-  }
   onSortEnd = ({oldIndex, newIndex}) => {
-    this.setState({
-      items: arrayMove(this.state.items, oldIndex, newIndex),
-    });
+    const { formData, onChange } = this.props;
+    console.log("Hello");
+    onChange(
+      formData.map((item, i) => {
+        if (i === newIndex) {
+          return formData[oldIndex];
+        } else if (i === oldIndex) {
+          return formData[newIndex];
+        } else {
+          return item;
+        }
+      }),
+      { validate: true }
+    );
   };
   get itemTitle() {
     const { schema } = this.props;
@@ -420,6 +416,7 @@ class ArrayField extends Component {
       title,
       TitleField,
       formContext,
+      onSortEnd:this.onSortEnd 
     };
 
     // Check if a custom render function was passed in
