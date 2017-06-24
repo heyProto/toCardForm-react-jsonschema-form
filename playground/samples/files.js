@@ -5,8 +5,19 @@ module.exports = {
   "properties": {
     "image": {
       "title": "Upload an Image: ",
-      "type": "image",
-      "ratio": "2/1"
+      "type": "string",
+      "ratio": "2/1",
+      "format":"image"
+    },
+    "color": {
+      "title": "Choose a color: ",
+      "type": "string",
+      "format":"color"
+    },
+    "textarea": {
+      "title": "Description: ",
+      "type": "string",
+      "format":"textarea"
     }
   }
 },
