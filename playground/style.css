@@ -15,7 +15,7 @@ body{
 }
 
 .form-container{
-    width: 500px;
+    width: 100%;
     box-sizing: border-box;
 }
 
@@ -47,11 +47,12 @@ body{
 
 /*===== grouping the form =====*/
 fieldset{
-    border: 0px;
+    border: 0;
     position: relative;
     display: inline-block;
-    width: 98%;
+    width: 100%;
     overflow: hidden;
+    box-sizing: border-box;
 }
 
 /*===== Lable and legends =====*/
