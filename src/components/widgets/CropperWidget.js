@@ -70,8 +70,6 @@ export default class CropperWidget extends Component {
     const data = this.cropper.getCroppedCanvas().toDataURL();
     this.props.onch(data);
     this.setState({
-      cropResult:null,
-      src:null,
       showModal:false
     });
   }

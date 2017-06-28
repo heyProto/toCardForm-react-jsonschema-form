@@ -84,8 +84,10 @@ class FileWidget extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     return shouldRender(this, nextProps, nextState);
   }
-  chooseFile(){
-    var file = document.getElementById('file');
+  chooseFile(e){
+    var parent = e.target.parentNode;
+    var file = parent.querySelector('#file2');
+    console.log(file);
     file.click();
   }
   onChange = event => {
@@ -115,7 +117,7 @@ class FileWidget extends Component {
         <p>
           <input
             ref={ref => (this.inputRef = ref)}
-            id="file"
+            id ="file2"
             style = {{display: "none"}}
             type="file"
             disabled={readonly || disabled}
