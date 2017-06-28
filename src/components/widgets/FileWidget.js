@@ -53,12 +53,11 @@ function extractFileInfo(dataURLs) {
       return ret;
     })
     .map(dataURL => {
-      var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
-      var regex = new RegExp(expression);
-      if(regex.test(dataURL) === true){
+    try{
+      const { blob, name } = dataURItoBlob(dataURL);
+      }catch(e){
         return "";
       }
-      const { blob, name } = dataURItoBlob(dataURL);
       return {
         name: name,
         size: blob.size,
