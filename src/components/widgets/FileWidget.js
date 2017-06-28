@@ -8,6 +8,7 @@ function addNameToDataURL(dataURL, name) {
 }
 
 function processFile(file) {
+  console.log(file,".......>.....");
   const { name, size, type } = file;
   return new Promise((resolve, reject) => {
     const reader = new window.FileReader();
@@ -48,8 +49,17 @@ function FilesInfo(props) {
 
 function extractFileInfo(dataURLs) {
   return dataURLs
-    .filter(dataURL => typeof dataURL !== "undefined")
+    .filter(dataURL => {
+      var ret = (typeof dataURL !== "undefined");
+      return ret;
+    })
     .map(dataURL => {
+      console.log(dataURL);
+      var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+      var regex = new RegExp(expression);
+      if(regex.test(dataURL) === true){
+        return "";
+      }
       const { blob, name } = dataURItoBlob(dataURL);
       return {
         name: name,
@@ -74,14 +84,21 @@ class FileWidget extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     return shouldRender(this, nextProps, nextState);
   }
-
+  chooseFile(e){
+    var parent = e.target.parentNode;
+    var file = parent.querySelector('#file2');
+    console.log(file);
+    file.click();
+  }
   onChange = event => {
     const { multiple, onChange } = this.props;
+    
     processFiles(event.target.files).then(filesInfo => {
       const state = {
         values: filesInfo.map(fileInfo => fileInfo.dataURL),
         filesInfo,
       };
+      console.log(state, "...");
       setState(this, state, () => {
         if (multiple) {
           onChange(state.values);
@@ -100,7 +117,8 @@ class FileWidget extends Component {
         <p>
           <input
             ref={ref => (this.inputRef = ref)}
-            id={id}
+            id ="file2"
+            style = {{display: "none"}}
             type="file"
             disabled={readonly || disabled}
             onChange={this.onChange}
@@ -108,6 +126,7 @@ class FileWidget extends Component {
             autoFocus={autofocus}
             multiple={multiple}
           />
+          <button type="button" htmlFor = "file" style = {{paddingTop:"9px 12px"}} className="default-button" onClick = {this.chooseFile}>Upload an image</button>
         </p>
         <FilesInfo filesInfo={filesInfo} />
       </div>
