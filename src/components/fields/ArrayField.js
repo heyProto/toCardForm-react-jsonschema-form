@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import {SortableContainer, SortableElement,SortableHandle,arrayMove} from 'react-sortable-hoc';
+
 import {
   getWidget,
   getDefaultFormState,
@@ -21,11 +22,13 @@ const DragHandle = SortableHandle(() => <span><i style = {{marginTop:"8px"}}clas
 const SortableItem = SortableElement((val) =>{
   var props = val.value;
   return(
+
       <div className={props.hasToolbar ? "col-xs-9" : "col-xs-12"} key={props.index} >
         <DragHandle />
         <RemoveBtn type="danger" icon="remove" style = {{ }}  tabIndex="-1" disabled={props.disabled || props.readonly} onClick={props.onDropIndexClick(props.index)}/>
         {props.children}
       </div>
+
     );
 });
 
@@ -416,7 +419,8 @@ class ArrayField extends Component {
       title,
       TitleField,
       formContext,
-      onSortEnd:this.onSortEnd 
+      onSortEnd:this.onSortEnd ,
+      useWindowAsScrollContainer: true
     };
 
     // Check if a custom render function was passed in

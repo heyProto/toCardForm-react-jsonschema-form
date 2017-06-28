@@ -216,7 +216,7 @@ input[type="color"]{
     cursor: pointer;
 }
 .delete-button{
-    background-color:white;
+    background-color:transparent;
     color:red;
     float:right;
     border:none;
@@ -256,4 +256,13 @@ input[type="color"]{
     background: #fafafa;
     padding: 0px 15px;
     margin-bottom: 10px;
+}
+
+.cropper-view-box{
+  outline:none !important;
+  outline-color:transparent !important;
+}
+
+.cropper-drag-box{
+  background-color:rgba(0,0,0,0.9);
 }

@@ -46,8 +46,10 @@
     "jsonschema": "^1.0.2",
     "lodash.topath": "^4.5.2",
     "prop-types": "^15.5.8",
+    "react-collapse": "^4.0.2",
     "react-cropper": "^0.12.0",
     "react-modal": "^2.0.6",
+    "react-motion": "^0.5.0",
     "react-sortable-hoc": "^0.6.3",
     "semantic-ui-css": "^2.2.10",
     "semantic-ui-react": "^0.68.5",
@@ -69,6 +71,7 @@
     "babel-register": "^6.18.0",
     "chai": "^3.3.0",
     "codemirror": "^5.20.2",
+    "compression-webpack-plugin": "^0.4.0",
     "cross-env": "^2.0.1",
     "css-loader": "^0.23.1",
     "eslint": "^3.15.0",
@@ -96,8 +99,10 @@
     "style-loader": "^0.13.2",
     "toctoc": "^0.2.3",
     "webpack": "^1.13.3",
+    "webpack-bundle-analyzer": "^2.8.2",
     "webpack-dev-middleware": "^1.8.4",
-    "webpack-hot-middleware": "^2.13.2"
+    "webpack-hot-middleware": "^2.13.2",
+    "webpack-node-externals": "^1.6.0"
   },
   "directories": {
     "test": "test"
