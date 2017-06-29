@@ -17,7 +17,7 @@ class ImageWidget extends Component {
       cropResult: null,
       url:null,
       showModal:false,
-      zoom:0.1
+      zoom:0.5
     };
     this.cropImage = this.cropImage.bind(this);
     this.cropModal = this.cropModal.bind(this);
@@ -228,11 +228,11 @@ class ImageWidget extends Component {
         <div>
           <button type = "button" onClick={this.handleOpenModal} className = "default-button">Upload an Image</button>
           <Modal style={{overlay: {
-          width: "590px",
+          width: "600px",
           position:"absolute",
           left:"50%",
           top:"50%",
-          height:"90%",
+          height:"85%",
           transform: "translate(-50%, -50%)",
           padding: "15px",
           border: "1px solid #efefef",
@@ -249,23 +249,26 @@ class ImageWidget extends Component {
               <i className ="remove icon" style = {{ color:"black",fontSize:"20px"}}></i>
             </button>          
           </div>
+          <div className = "modal-title">
+            Upload an Image
+          </div>
             <div className="form-group form-col-4">
+              <label style = {{ marginLeft:"0px" }} className = "form-lable-hint">Enter Image URL</label>
               <div className="ui action input">
-                  <input type ="url" onChange = {this.onChangeURL} placeholder="Enter a URL"/>
+                  <input type ="url" style = {{ width:"250px"}}onChange = {this.onChangeURL}/>
                   <button type = "button" className ="ui button" onClick={()=>{this.loadImage(this.state.url)}} >Upload</button>
               </div>
             </div>
-            <span style = {{ marginLeft:"100px"}}>{'\u00A0'} Or {'\u00A0'}</span>
-            <div className="form-group form-col-4">
+            <span style = {{marginLeft:"190px",fontWeight:"700"}}>{'\u00A0'} OR {'\u00A0'}</span>
+            <div className="form-group form-col-4" style = {{width:"25%"}}>
+                <label className = "form-lable-hint" style = {{ marginLeft:"0px" }}>Upload from Computer</label>
                 <input type = "file" id="file" name = "file" style = {{ display: 'none' }} onChange={this.onChangeFile}/>
-                <button type="button" htmlFor = "file" style = {{padding:"9px 12px"}} className="default-button" onClick = {this.chooseFile}>Upload an image</button>
+                <button type="button" htmlFor = "file" style = {{padding:"9px 12px"}} className="default-button" onClick = {this.chooseFile}>Choose an image</button>
             </div>
             <div className="form-clearfix"></div>
             <div className="form-col-12">
-                <div className="image-crop-area">
-                    Image crop area
-                </div>
-                <button type="button" className="default-button primary-button" onClick={this.cropModal}>Crop image</button>
+                <div className="image-crop-area"/>
+                <button type="button" style = {{position:'absolute',right:'20px'}}className="default-button primary-button" onClick={this.cropModal}>Upload</button>
             </div>
           </Modal>
         </div>
@@ -275,7 +278,7 @@ class ImageWidget extends Component {
       <div>
           <button type = "button" onClick={this.handleOpenModal} className = "default-button">Upload an Image</button>
           <Modal style={{overlay: {
-            width: "590px",
+            width: "600px",
             height:"500px",
             padding: "15px",
             position:"absolute",
@@ -294,24 +297,28 @@ class ImageWidget extends Component {
            contentLabel="Minimal Modal Example">
            <div style = {{position:"absolute",right:"1",top:"7"}}>
             <button type = "button" className="circular ui icon button"  onClick={this.handleCloseModal} style = {{ backgroundColor:"white"}}>
-              <i className ="remove icon" style = {{ color:"black",fontSize:"20px"}}></i>
+              <i className ="remove icon" style = {{ color:"#aaa",fontSize:"20px"}}></i>
             </button>          
           </div>
+            <div className = "modal-title">
+              Upload an Image
+            </div>
             <div className="form-group form-col-4">
+              <label style = {{ marginLeft:"0px" }} className = "form-lable-hint">Enter Image URL</label>
               <div className="ui action input">
-                <input type ="url" onChange = {this.onChangeURL} placeholder="Enter a URL"/>
-                <button type = "button" className ="ui button" onClick={()=>{this.loadImage(this.state.url)}} >Upload</button>
+                  <input type ="url" style = {{ width:"250px"}}onChange = {this.onChangeURL}/>
+                  <button type = "button" className ="ui button" onClick={()=>{this.loadImage(this.state.url)}} >Upload</button>
               </div>
             </div>
-            <span style = {{ marginLeft:"100px"}}>{'\u00A0'} Or {'\u00A0'}</span>
-            <div className="form-group form-col-4">
+            <span style = {{marginLeft:"190px",fontWeight:"700"}}>{'\u00A0'} OR {'\u00A0'}</span>
+            <div className="form-group form-col-4" style = {{width:"25%"}}>
+                <label className = "form-lable-hint" style = {{ marginLeft:"0px" }}>Upload from Computer</label>
                 <input type = "file" id="file" name = "file" style = {{ display: 'none' }} onChange={this.onChangeFile}/>
-                <button type="button" htmlFor = "file" style = {{paddingTop:"9px 12px"}} className="default-button" onClick = {this.chooseFile}>Upload an image</button>
+                <button type="button" htmlFor = "file" style = {{padding:"9px 12px"}} className="default-button" onClick = {this.chooseFile}>Choose an image</button>
             </div>
             <div className="form-clearfix"></div>
             <div className="form-col-12">
                 <div className="image-crop-area">
-                    Image crop area
                     <Cropper
                       cropBoxResizable = {false}
                       toggleDragModeOnDblclick = {false}
@@ -330,11 +337,11 @@ class ImageWidget extends Component {
                       movable = {true}
                       src={this.state.src}
                       ref={cropper => { this.cropper = cropper; }}
-                      zoomTo= {this.state.zoom}
+                      zoomTo = {this.state.zoom}
                     />
-                    <i style = {{ fontSize:"10px"}}className ="image icon"></i><i className ="image icon" style = {{ fontSize:"17px", position:"absolute",right:"40"}}>  </i><input type = "range"  min="0.1" max="2" step="0.05" value={this.state.zoom} onChange = {this.zoom} id = "zoom" style={{width:"98%"}}/>
+                    <div style = {{ marginTop:"8px"}}><i style = {{ fontSize:"10px"}}className ="image icon"></i><i className ="image icon" style = {{ fontSize:"17px", position:"absolute",right:"40"}}>  </i><input type = "range"  min="0.1" max="2" step="0.05" value={this.state.zoom} onChange = {this.zoom} id = "zoom" style={{width:"97%"}}/></div>
                 </div>
-                <button type="button" style = {{marginTop:"-20px"}} className="default-button primary-button" onClick={this.cropModal}>Crop image</button>
+                <button type="button" style = {{position:'absolute',right:'35px'}} className="default-button primary-button" onClick={this.cropModal}>Upload</button>
             </div>
           </Modal>
         </div>

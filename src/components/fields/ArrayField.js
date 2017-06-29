@@ -425,7 +425,7 @@ class ArrayField extends Component {
 
     // Check if a custom render function was passed in
     const Component = ArrayFieldTemplate || DefaultNormalArrayFieldTemplate;
-    if(isDraggable === undefined ){
+    if(isDraggable === true ){
       return <SortableList {...arrayProps}/>;
     }else{
       return <Component {...arrayProps}/>;

@@ -9,6 +9,7 @@ module.exports = {
     "firstName": {
       "type": "string",
       "title": "First name",
+      "description": "A description of this instance",
       "minLength": 8,
       "pattern": "\\d+"
     },
