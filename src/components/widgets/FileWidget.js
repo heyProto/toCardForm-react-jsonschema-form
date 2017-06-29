@@ -8,7 +8,6 @@ function addNameToDataURL(dataURL, name) {
 }
 
 function processFile(file) {
-  console.log(file,".......>.....");
   const { name, size, type } = file;
   return new Promise((resolve, reject) => {
     const reader = new window.FileReader();
@@ -54,13 +53,11 @@ function extractFileInfo(dataURLs) {
       return ret;
     })
     .map(dataURL => {
-      console.log(dataURL);
-      var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
-      var regex = new RegExp(expression);
-      if(regex.test(dataURL) === true){
+    try{
+      const { blob, name } = dataURItoBlob(dataURL);
+      }catch(e){
         return "";
       }
-      const { blob, name } = dataURItoBlob(dataURL);
       return {
         name: name,
         size: blob.size,
@@ -87,7 +84,6 @@ class FileWidget extends Component {
   chooseFile(e){
     var parent = e.target.parentNode;
     var file = parent.querySelector('#file2');
-    console.log(file);
     file.click();
   }
   onChange = event => {
@@ -98,7 +94,6 @@ class FileWidget extends Component {
         values: filesInfo.map(fileInfo => fileInfo.dataURL),
         filesInfo,
       };
-      console.log(state, "...");
       setState(this, state, () => {
         if (multiple) {
           onChange(state.values);
