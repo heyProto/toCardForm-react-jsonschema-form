@@ -267,7 +267,9 @@ class ImageWidget extends Component {
             </div>
             <div className="form-clearfix"></div>
             <div className="form-col-12">
-                <div className="image-crop-area"/>
+                <div className="image-crop-area" style={{textAlign:"center"}}>
+                   <i className ="image icon" style = {{ position:"relative",top: "135px",color:"rgb(210, 210, 210)",fontSize:"50px"}}></i>
+                </div>
                 <button type="button" style = {{position:'absolute',right:'20px'}}className="default-button primary-button" onClick={this.cropModal}>Upload</button>
             </div>
           </Modal>
@@ -339,7 +341,7 @@ class ImageWidget extends Component {
                       ref={cropper => { this.cropper = cropper; }}
                       zoomTo = {this.state.zoom}
                     />
-                    <div style = {{ marginTop:"8px"}}><i style = {{ fontSize:"10px"}}className ="image icon"></i><i className ="image icon" style = {{ fontSize:"17px", position:"absolute",right:"40"}}>  </i><input type = "range"  min="0.1" max="2" step="0.05" value={this.state.zoom} onChange = {this.zoom} id = "zoom" style={{width:"97%"}}/></div>
+                    <div style = {{ marginTop:"8px"}}><i style = {{ fontSize:"10px"}}className ="image icon"></i><i className ="image icon" style = {{ fontSize:"17px", position:"absolute",right:"30"}}>  </i><input type = "range"  min="0.1" max="2" step="0.05" value={this.state.zoom} onChange = {this.zoom} id = "zoom" style={{width:"97%"}}/></div>
                 </div>
                 <button type="button" style = {{position:'absolute',right:'35px'}} className="default-button primary-button" onClick={this.cropModal}>Upload</button>
             </div>
