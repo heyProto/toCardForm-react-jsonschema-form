@@ -46,7 +46,6 @@ function Label(props) {
   return (
     <label className="form-label" htmlFor={id}>
       {required ? label + REQUIRED_FIELD_SYMBOL : label}
-      {props.description}
     </label>
   );
 }
@@ -71,11 +70,11 @@ function ErrorList(props) {
   return (
     <div>
       <p />
-      <ul className="error-detail bs-callout bs-callout-info">
+      <div className="error-detail bs-callout bs-callout-info">
         {errors.map((error, index) => {
-          return <li className="form-error-message" key={index}>{error}</li>;
+          return <p className="form-error-message" key={index}>{error}</p>;
         })}
-      </ul>
+      </div>
     </div>
   );
 }
@@ -96,11 +95,13 @@ function DefaultTemplate(props) {
   if (hidden) {
     return children;
   }
+  console.log(description);
   return (
     <div className={classNames}>
-      {displayLabel && <Label label={label} description = {description} required={required} id={id} />}
+      {displayLabel && <Label label={label} required={required} id={id} />}
       {children}
       {errors}
+      {description}
       {help}
     </div>
   );

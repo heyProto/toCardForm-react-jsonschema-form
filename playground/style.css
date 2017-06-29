@@ -5,7 +5,9 @@ body{
     letter-spacing: 0.5px;
     font-size: 14px;
 }
-
+.field-object{
+  margin-left:-10px;
+}
 .container{
     width: 980px;
     margin-left: auto;
@@ -28,7 +30,11 @@ body{
     display: inline-block;
 }
 
-
+.modal-title{
+    font-size: 1.4em;
+    font-weight: 900;
+    margin-bottom: 20px;
+}
 /*======== grid =========*/
 .form-col-4{
     width: 33.33%;
@@ -44,7 +50,6 @@ body{
     box-sizing: content-box;
     float: left;
 }
-
 /*===== grouping the form =====*/
 fieldset{
     border: 0;
@@ -57,8 +62,8 @@ fieldset{
 
 /*===== Lable and legends =====*/
 legend{
-    font-weight: 700;
-    font-size: 1.7em;
+    font-weight: bold;
+    font-size: 1em;
     border-bottom: 1px solid #efefef;
     width: 100%;
     padding-bottom: 5px;
@@ -67,7 +72,6 @@ legend{
 
 .form-sub-heading{
     font-size: 1.2em;
-    font-weight: 700;
 }
 
 fieldset p{
@@ -86,6 +90,7 @@ fieldset p{
 }
 
 .form-lable-hint{
+    font-size:0.8em;
     color: #999;
     margin-left: 5px;
     font-weight: 300;
@@ -101,7 +106,8 @@ fieldset p{
     color: #F44336;
     /*font-weight: 300;*/
     font-size: 0.8em;
-    margin-top: 5px;
+    margin-left: 5px;
+    margin-top: -5px;
 }
 
 
@@ -255,7 +261,6 @@ input[type="color"]{
 .image-crop-area, .image-display-area{
     min-height: 300px;
     background: #fafafa;
-    padding: 0px 15px;
     margin-bottom: 10px;
 }
 
@@ -266,4 +271,7 @@ input[type="color"]{
 
 .cropper-drag-box{
   background-color:rgba(0,0,0,0.9);
+}
+.cropper-container{
+    width:100%;
 }

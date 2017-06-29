@@ -33,16 +33,18 @@ function FilesInfo(props) {
     return null;
   }
   return (
-    <ul className="file-info">
+    <div className="file-info">
       {filesInfo.map((fileInfo, key) => {
+        if(fileInfo === "") return null;
         const { name, size, type } = fileInfo;
         return (
-          <li key={key}>
+          <p style = {{ color: "#333",
+fontSize: "0.8em",marginLeft:"5px" }} key={key}>
             <strong>{name}</strong> ({type}, {size} bytes)
-          </li>
+          </p>
         );
       })}
-    </ul>
+    </div>
   );
 }
 
