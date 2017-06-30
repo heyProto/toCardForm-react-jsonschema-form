@@ -118,7 +118,6 @@ function DefaultArrayItem(props) {
     paddingRight: 6,
     fontWeight: "bold",
   };
-  console.log("Hello");
   return (
     <div key={props.index} className={props.className}>
 
@@ -258,7 +257,6 @@ class ArrayField extends Component {
 
   onSortEnd = ({oldIndex, newIndex}) => {
     const { formData, onChange } = this.props;
-    console.log("Hello");
     onChange(
       formData.map((item, i) => {
         if (i === newIndex) {

@@ -35,7 +35,6 @@ class ImageWidget extends Component {
   
   
   handleOpenModal () {
-    console.log(this.props)
     this.setState({ 
       showModal: true 
     });
@@ -347,7 +346,7 @@ class ImageWidget extends Component {
                       ref={cropper => { this.cropper = cropper; }}
                       zoomTo = {this.state.zoom}
                     />
-                    <div style = {{ marginTop:"8px"}}><i style = {{ fontSize:"10px"}}className ="image icon"></i><i className ="image icon" style = {{ fontSize:"17px", position:"absolute",right:"30"}}>  </i><input type = "range"  min="0.1" max="2" step="0.05" value={this.state.zoom} onChange = {this.zoom} id = "zoom" style={{width:"97%"}}/></div>
+                    <div style = {{ marginTop:"8px"}}><i style = {{ fontSize:"10px"}}className ="image icon"></i><i className ="image icon" style = {{ fontSize:"17px", position:"absolute",right:"30"}}>  </i><input type = "range"  min="0.35" max="2" step="0.05" value={this.state.zoom} onChange = {this.zoom} id = "zoom" style={{width:"97%"}}/></div>
                 </div>
                 <button type="button" style = {{position:'absolute',right:'35px'}} className="default-button primary-button" onClick={this.cropModal}>Upload</button>
             </div>
