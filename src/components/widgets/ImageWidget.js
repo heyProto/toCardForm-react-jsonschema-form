@@ -17,7 +17,8 @@ class ImageWidget extends Component {
       cropResult: null,
       url:null,
       showModal:false,
-      zoom:0.5
+      zoom:0.5,
+      srcStore:null
     };
     this.cropImage = this.cropImage.bind(this);
     this.cropModal = this.cropModal.bind(this);
@@ -34,11 +35,16 @@ class ImageWidget extends Component {
   
   
   handleOpenModal () {
-    this.setState({ showModal: true });
+    this.setState({ 
+      showModal: true 
+    });
   }
   
   handleCloseModal () {
-    this.setState({ showModal: false });
+    this.setState({ 
+      src:this.state.srcStore,
+      showModal: false
+    });
   }
   onChangeFile(e) {
     e.preventDefault();
@@ -61,7 +67,6 @@ class ImageWidget extends Component {
     this.setState({
         url:value
     });
-    return this.props.onChange(value);
   }
   
   cropImage() {
@@ -82,6 +87,7 @@ class ImageWidget extends Component {
     const data = this.cropper.getCroppedCanvas().toDataURL();
     this.props.onChange(data);
     this.setState({
+      srcStore:this.state.src,
       showModal:false
     });
   }
@@ -158,7 +164,7 @@ class ImageWidget extends Component {
               ref={cropper => { this.cropper = cropper; }}
               zoomTo = {this.state.zoom}
             />
-            <input type = "range"  min="0" max="2" step="0.05" value={this.state.zoom} onChange = {this.zoom} id = "zoom" style={{width:"52.5%"}}/>
+            <input type = "range"  min="0.05" max="2" step="0.05" value={this.state.zoom} onChange = {this.zoom} id = "zoom" style={{width:"52.5%"}}/>
           </div>
           <div>
             <div className="box" style={{ width: '50%'}}>
@@ -250,7 +256,7 @@ class ImageWidget extends Component {
             </button>          
           </div>
           <div className = "modal-title">
-            Upload an Image
+            {this.props.schema.title}
           </div>
             <div className="form-group form-col-4">
               <label style = {{ marginLeft:"0px" }} className = "form-lable-hint">Enter Image URL</label>
@@ -270,7 +276,6 @@ class ImageWidget extends Component {
                 <div className="image-crop-area" style={{textAlign:"center"}}>
                    <i className ="image icon" style = {{ position:"relative",top: "135px",color:"rgb(210, 210, 210)",fontSize:"50px"}}></i>
                 </div>
-                <button type="button" style = {{position:'absolute',right:'20px'}}className="default-button primary-button" onClick={this.cropModal}>Upload</button>
             </div>
           </Modal>
         </div>
@@ -308,7 +313,7 @@ class ImageWidget extends Component {
             <div className="form-group form-col-4">
               <label style = {{ marginLeft:"0px" }} className = "form-lable-hint">Enter Image URL</label>
               <div className="ui action input">
-                  <input type ="url" style = {{ width:"250px"}}onChange = {this.onChangeURL}/>
+                  <input type ="url" style = {{ width:"250px"}} onChange = {this.onChangeURL}/>
                   <button type = "button" className ="ui button" onClick={()=>{this.loadImage(this.state.url)}} >Upload</button>
               </div>
             </div>
@@ -341,7 +346,7 @@ class ImageWidget extends Component {
                       ref={cropper => { this.cropper = cropper; }}
                       zoomTo = {this.state.zoom}
                     />
-                    <div style = {{ marginTop:"8px"}}><i style = {{ fontSize:"10px"}}className ="image icon"></i><i className ="image icon" style = {{ fontSize:"17px", position:"absolute",right:"30"}}>  </i><input type = "range"  min="0.1" max="2" step="0.05" value={this.state.zoom} onChange = {this.zoom} id = "zoom" style={{width:"97%"}}/></div>
+                    <div style = {{ marginTop:"8px"}}><i style = {{ fontSize:"10px"}}className ="image icon"></i><i className ="image icon" style = {{ fontSize:"17px", position:"absolute",right:"30"}}>  </i><input type = "range"  min="0.35" max="2" step="0.05" value={this.state.zoom} onChange = {this.zoom} id = "zoom" style={{width:"97%"}}/></div>
                 </div>
                 <button type="button" style = {{position:'absolute',right:'35px'}} className="default-button primary-button" onClick={this.cropModal}>Upload</button>
             </div>

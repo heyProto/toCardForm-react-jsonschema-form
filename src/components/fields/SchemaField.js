@@ -95,7 +95,6 @@ function DefaultTemplate(props) {
   if (hidden) {
     return children;
   }
-  console.log(description);
   return (
     <div className={classNames}>
       {displayLabel && <Label label={label} required={required} id={id} />}

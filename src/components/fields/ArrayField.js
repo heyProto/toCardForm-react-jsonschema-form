@@ -118,7 +118,6 @@ function DefaultArrayItem(props) {
     paddingRight: 6,
     fontWeight: "bold",
   };
-  console.log("Hello");
   return (
     <div key={props.index} className={props.className}>
 
@@ -258,7 +257,6 @@ class ArrayField extends Component {
 
   onSortEnd = ({oldIndex, newIndex}) => {
     const { formData, onChange } = this.props;
-    console.log("Hello");
     onChange(
       formData.map((item, i) => {
         if (i === newIndex) {
@@ -425,7 +423,7 @@ class ArrayField extends Component {
 
     // Check if a custom render function was passed in
     const Component = ArrayFieldTemplate || DefaultNormalArrayFieldTemplate;
-    if(isDraggable === true ){
+    if(isDraggable){
       return <SortableList {...arrayProps}/>;
     }else{
       return <Component {...arrayProps}/>;
