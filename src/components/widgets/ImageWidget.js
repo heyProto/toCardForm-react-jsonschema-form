@@ -28,20 +28,20 @@ class ImageWidget extends Component {
     this.handleCloseModal = this.handleCloseModal.bind(this);
 
   }
-  
+
   shouldComponentUpdate(nextProps, nextState) {
     return shouldRender(this, nextProps, nextState);
   }
-  
-  
+
+
   handleOpenModal () {
-    this.setState({ 
-      showModal: true 
+    this.setState({
+      showModal: true
     });
   }
-  
+
   handleCloseModal () {
-    this.setState({ 
+    this.setState({
       src:this.state.srcStore,
       showModal: false
     });
@@ -56,24 +56,24 @@ class ImageWidget extends Component {
     }
     const reader = new FileReader();
     reader.onload = () => {
-      this.setState({ 
+      this.setState({
       src: reader.result,
       cropResult:null});
     };
     reader.readAsDataURL(files[0]);
   }
-  
+
   onChangeURL = ({ target: { value } }) => {
     this.setState({
         url:value
     });
   }
-  
+
   cropImage() {
     if (typeof this.cropper.getCroppedCanvas() === 'undefined') {
       return;
     }
-    
+
     const data = this.cropper.getCroppedCanvas().toDataURL();
     this.setState({
       cropResult: data,
@@ -195,7 +195,7 @@ class ImageWidget extends Component {
         <div>
           <div className = "check" style={{ width: '100%' }}>
             <input type="file" onChange={this.onChangeFile} />
-            
+
             <br />
             <br />
             <Cropper
@@ -251,9 +251,9 @@ class ImageWidget extends Component {
           }}} isOpen={this.state.showModal}
           contentLabel="Minimal Modal Example">
           <div style = {{position:"absolute",right:"1",top:"7"}}>
-            <button button = "button" className="circular ui icon button"  onClick={this.handleCloseModal} style = {{ backgroundColor:"white"}}>
+            <button className="ui icon button"  onClick={this.handleCloseModal} style = {{ backgroundColor:"white"}}>
               <i className ="remove icon" style = {{ color:"black",fontSize:"20px"}}></i>
-            </button>          
+            </button>
           </div>
           <div className = "modal-title">
             {this.props.schema.title}
@@ -303,9 +303,9 @@ class ImageWidget extends Component {
           }}} isOpen={this.state.showModal}
            contentLabel="Minimal Modal Example">
            <div style = {{position:"absolute",right:"1",top:"7"}}>
-            <button type = "button" className="circular ui icon button"  onClick={this.handleCloseModal} style = {{ backgroundColor:"white"}}>
+            <button className="ui icon button"  onClick={this.handleCloseModal} style = {{ backgroundColor:"white"}}>
               <i className ="remove icon" style = {{ color:"#aaa",fontSize:"20px"}}></i>
-            </button>          
+            </button>
           </div>
             <div className = "modal-title">
               Upload an Image
