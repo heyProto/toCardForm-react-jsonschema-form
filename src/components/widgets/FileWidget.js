@@ -90,7 +90,7 @@ class FileWidget extends Component {
   }
   onChange = event => {
     const { multiple, onChange } = this.props;
-    
+
     processFiles(event.target.files).then(filesInfo => {
       const state = {
         values: filesInfo.map(fileInfo => fileInfo.dataURL),
@@ -123,7 +123,7 @@ class FileWidget extends Component {
             autoFocus={autofocus}
             multiple={multiple}
           />
-          <button type="button" htmlFor = "file" style = {{paddingTop:"9px 12px"}} className="default-button" onClick = {this.chooseFile}>Upload an image</button>
+          <button type="button" htmlFor = "file" style = {{paddingTop:"9px 12px"}} className="default-button" onClick = {this.chooseFile}>Upload an Image</button>
         </p>
         <FilesInfo filesInfo={filesInfo} />
       </div>
