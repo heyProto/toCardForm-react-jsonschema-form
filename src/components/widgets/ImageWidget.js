@@ -3,11 +3,8 @@ import PropTypes from "prop-types";
 import 'cropperjs/dist/cropper.css';
 import Cropper from 'react-cropper';
 import Modal from 'react-modal';
-import { dataURItoBlob, shouldRender, setState } from "../../utils";
+import { shouldRender } from "../../utils";
 
-function addNameToDataURL(dataURL, name) {
-  return dataURL.replace(";base64", `;name=${name};base64`);
-}
 class ImageWidget extends Component {
 
   constructor(props) {
@@ -17,14 +14,16 @@ class ImageWidget extends Component {
       cropResult: null,
       url:null,
       showModal:false,
-      zoom:0,
-      srcStore:null
+      zoom: 0.5,
+      fileSizeError: undefined,
+      fileInfo: undefined,
+      srcStore: null
     };
-    this.cropImage = this.cropImage.bind(this);
     this.cropModal = this.cropModal.bind(this);
     this.onChangeFile = this.onChangeFile.bind(this);
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.zoom = this.zoom.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -38,44 +37,68 @@ class ImageWidget extends Component {
   }
 
   handleCloseModal () {
-    this.setState({
-      src:this.state.srcStore,
-      showModal: false
-    });
+    let state = {
+      src: this.state.srcStore,
+      showModal: false,
+    };
+
+    if (!this.state.srcStore) {
+      state.fileInfo = undefined;
+      state.fileName = undefined;
+      state.fileSize = undefined;
+      state.fileType = undefined;
+    }
+
+    this.setState(state);
+  }
+
+  displayFilesInfo() {
+    return (
+      <div className="file-info">
+        <p style = {{ color: "#333", fontSize: "0.8em",marginLeft:"5px" }}>
+          <strong>{this.state.fileName}</strong> ({this.state.fileType}, {this.state.fileSize} bytes)
+        </p>
+      </div>
+    );
   }
 
   onChangeFile(e) {
     e.preventDefault();
-    let files;
+    let file;
     if (e.dataTransfer) {
-      files = e.dataTransfer.files;
+      file = e.dataTransfer.files[0];
     } else if (e.target) {
-      files = e.target.files;
+      file = e.target.files[0];
     }
-    const reader = new FileReader();
-    reader.onload = () => {
+    if ((file.size/1000) <= 500.0) {
       this.setState({
-        src: reader.result,
-        cropResult:null
+        fileSizeError: undefined,
+        fileInfo: true,
+        fileName: file.name,
+        fileSize: file.size,
+        fileType: file.type
       });
-      setTimeout(() => {
-        this.zoom();
-      }, 500);
-    };
-    reader.readAsDataURL(files[0]);
-  }
-
-  cropImage() {
-    if (typeof this.cropper.getCroppedCanvas() === 'undefined') {
+    } else {
+      this.setState({
+        fileSizeError: true,
+        src: null,
+        fileInfo: undefined,
+        fileName: false,
+        fileSize: false,
+        fileType: false
+      });
       return;
     }
-
-    const data = this.cropper.getCroppedCanvas().toDataURL();
-    this.setState({
-      cropResult: data,
-    });
-    this.props.onChange(data);
+    const reader = new FileReader();
+    reader.onload = event => {
+      this.setState({
+        src: reader.result,
+        cropResult: null
+      });
+    };
+    reader.readAsDataURL(file);
   }
+
   cropModal(){
     if (typeof this.cropper.getCroppedCanvas() === 'undefined') {
       return;
@@ -83,46 +106,40 @@ class ImageWidget extends Component {
     const data = this.cropper.getCroppedCanvas().toDataURL();
     this.props.onChange(data);
     this.setState({
-      srcStore:this.state.src,
-      showModal:false
+      srcStore: this.state.src,
+      showModal: false
     });
   }
   chooseFile(){
     var file = document.getElementById('file');
     file.click();
   }
-  loadImage( src ){
-    var file = document.getElementById("file");
-    if(file !== null){
-      file.value = "";
-    }
-    this.setState({
-        src:src,
-        cropResult:null
-    });
-  }
-  deleteImage( src ){
-    this.setState({
-        src:null
-    });
-  }
+
   ratioReturn( fraction ){
     var bits = fraction.split("/");
     return parseInt(bits[0],10)/parseInt(bits[1],10);
   }
-  zoom = ()=>{
+
+  zoom() {
     var zoom = document.getElementById("zoom");
     if (zoom) {
       var value = zoom.value;
       this.setState({
-        zoom:value
+        zoom: +value
       });
     }
   }
+
   render() {
     return (
       <div>
-        <button type = "button" onClick={this.handleOpenModal} className = "default-button">Upload an Image</button>
+        <p>
+          <button type = "button" onClick={this.handleOpenModal} className = "default-button">Upload an Image</button>
+        </p>
+        {
+          this.state.fileInfo &&
+            this.displayFilesInfo()
+        }
         <Modal style={{overlay: {
           width: "600px",
           height:"500px",
@@ -130,7 +147,6 @@ class ImageWidget extends Component {
           position:"absolute",
           left:"50%",
           top:"50%",
-          height:"90%",
           transform: "translate(-50%, -50%)",
           border: "1px solid #efefef",
           boxShadow: "0px 10px 20px #efefef",
@@ -143,7 +159,7 @@ class ImageWidget extends Component {
           isOpen={this.state.showModal}
           contentLabel="Minimal Modal Example"
         >
-          <div style = {{position:"absolute",right:"1",top:"7"}}>
+          <div style = {{position:"absolute",right:"1px",top:"7px"}}>
             <button className="ui icon button"  onClick={this.handleCloseModal} style = {{ backgroundColor:"white"}}>
               <i className ="remove icon" style = {{ color:"#aaa",fontSize:"20px"}}></i>
             </button>
@@ -151,17 +167,27 @@ class ImageWidget extends Component {
           <div className = "modal-title">
             {this.props.schema.title}
           </div>
-          <div className="form-group form-col-4" style={{width:"25%"}}>
-            <label className = "form-lable-hint" style={{ marginLeft:"0px" }}>Upload from Computer</label>
-            <input type="file" id="file" name="file" style={{ display: 'none' }} onChange={this.onChangeFile}/>
+          <div className="form-group form-col-4" style={{"width": "100%"}}>
+            <label className = "form-lable-hint" style={{"display": "block"}}>Upload from Computer</label>
+            <input type="file" id="file" name="file" style={{ display: 'none'}} onChange={this.onChangeFile} multiple={false}/>
             <button
               type="button"
               htmlFor="file"
               style={{padding:"9px 12px"}}
               className="default-button"
-              onClick={this.chooseFile}>
+              onClick={this.chooseFile}
+              style={{"display": "block"}}
+            >
               {this.state.src ? 'Change the image' : 'Choose an image'}
             </button>
+            {
+              this.state.fileSizeError ?
+                <div className="error-detail bs-callout bs-callout-info">
+                  <p className="form-error-message">Image size cannot be more than 500kB.</p>
+                </div>
+              :
+                <span className="form-lable-hint">Hint: Image size cannot be more than 500kB.</span>
+            }
           </div>
           <div className="form-clearfix"></div>
           {
@@ -169,16 +195,15 @@ class ImageWidget extends Component {
               <div className="form-col-12">
                 <div className="image-crop-area">
                   <Cropper
-                    cropBoxResizable = {false}
-                    toggleDragModeOnDblclick = {false}
+                    cropBoxResizable={false}
+                    toggleDragModeOnDblclick={false}
                     dragMode='move'
                     cropBoxMovable = {false}
                     zoomOnWheel={false}
                     zoomOnTouch={false}
                     viewMode={1}
-                    background = {false}
-                    modal = {true}
-                    checkCrossOrigin={true}
+                    background={false}
+                    modal={true}
                     style={{ height: 300, width: '100%' }}
                     preview=".img-preview"
                     aspectRatio={this.ratioReturn(this.props.schema.ratio)}
@@ -186,31 +211,35 @@ class ImageWidget extends Component {
                     movable = {true}
                     src={this.state.src}
                     ref={cropper => { this.cropper = cropper; }}
-                    zoomTo={this.state.zoom}
+                    zoomTo={ +this.state.zoom }
                   />
-                  <div style={{ marginTop:"8px"}}>
-                    <i style={{ fontSize:"10px"}} className="image icon"></i>
-                    <i className ="image icon" style={{ fontSize:"17px", position:"absolute",right:"30"}}></i>
-                    <input
-                      type="range"
-                      min="0"
-                      max="2"
-                      step="0.05"
-                      value={this.state.zoom}
-                      onChange={this.zoom}
-                      id="zoom"
-                      style={{width:"97%"}}
-                    />
+                  <div>
+                    <div style={{ marginTop:"8px"}}>
+                      <input
+                        type="range"
+                        min="0.5"
+                        max="1.75"
+                        step="0.05"
+                        value={ +this.state.zoom}
+                        onChange={this.zoom}
+                        id="zoom"
+                        style={{width:"100%"}}
+                      />
+                    </div>
+                    <i style={{ fontSize:"10px", float: "left", "paddingBottom": "5px", "paddingLeft": "5px"}} className="image icon"></i>
+                    <i className ="image icon" style={{ fontSize:"17px", float: "right", "paddingBottom": "5px", "paddingRight": "5px"}}></i>
+                    <div style={{"clear": "both"}} />
                   </div>
                 </div>
                 <button
                   type="button"
-                  style={{position:'absolute',right:'35px'}}
+                  style={{"float": "right"}}
                   className="default-button primary-button"
                   onClick={this.cropModal}
                 >
                   Upload
                 </button>
+                <div style={{"clear": "both"}} />
               </div>
             :
               <div className="form-col-12">

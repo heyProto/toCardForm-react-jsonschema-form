@@ -10,6 +10,9 @@ function addNameToDataURL(dataURL, name) {
 function processFile(file) {
   const { name, size, type } = file;
   return new Promise((resolve, reject) => {
+    if ((size/1000) >= 500.0) {
+      reject({fileSizeError: true});
+    }
     const reader = new window.FileReader();
     reader.onload = event => {
       resolve({
@@ -71,6 +74,7 @@ function extractFileInfo(dataURLs) {
 class FileWidget extends Component {
   defaultProps = {
     multiple: false,
+    fileSizeError: undefined
   };
 
   constructor(props) {
@@ -94,15 +98,23 @@ class FileWidget extends Component {
     processFiles(event.target.files).then(filesInfo => {
       const state = {
         values: filesInfo.map(fileInfo => fileInfo.dataURL),
-        filesInfo,
-      };
-      setState(this, state, () => {
-        if (multiple) {
-          onChange(state.values);
-        } else {
-          onChange(state.values[0]);
+          filesInfo,
+        };
+        this.setState({fileSizeError: undefined});
+        setState(this, state, () => {
+          if (multiple) {
+            onChange(state.values);
+          } else {
+            onChange(state.values[0]);
         }
       });
+    }).catch(error => {
+      console.log(error)
+      if (error.fileSizeError) {
+        this.setState({
+          fileSizeError: true
+        })
+      }
     });
   };
 
@@ -125,6 +137,14 @@ class FileWidget extends Component {
           />
           <button type="button" htmlFor = "file" style = {{paddingTop:"9px 12px"}} className="default-button" onClick = {this.chooseFile}>Upload an Image</button>
         </p>
+        {
+            this.state.fileSizeError ?
+              <div className="error-detail bs-callout bs-callout-info">
+                <p className="form-error-message">Image size cannot be more than 500kB.</p>
+              </div>
+            :
+              <span className="form-lable-hint">Hint: Image size cannot be more than 500kB.</span>
+        }
         <FilesInfo filesInfo={filesInfo} />
       </div>
     );
