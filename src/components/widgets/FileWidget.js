@@ -41,8 +41,7 @@ function FilesInfo(props) {
         if(fileInfo === "") return null;
         const { name, size, type } = fileInfo;
         return (
-          <p style = {{ color: "#333",
-fontSize: "0.8em",marginLeft:"5px" }} key={key}>
+          <p style = {{ color: "#333", fontSize: "0.8em", marginTop:"15px" }} key={key}>
             <strong>{name}</strong> ({type}, {size} bytes)
           </p>
         );
@@ -123,20 +122,26 @@ class FileWidget extends Component {
     const { filesInfo } = this.state;
     return (
       <div>
-        <p>
-          <input
-            ref={ref => (this.inputRef = ref)}
-            id ="file2"
-            style = {{display: "none"}}
-            type="file"
-            disabled={readonly || disabled}
-            onChange={this.onChange}
-            defaultValue=""
-            autoFocus={autofocus}
-            multiple={multiple}
-          />
-          <button type="button" htmlFor = "file" style = {{paddingTop:"9px 12px"}} className="default-button" onClick = {this.chooseFile}>Upload an Image</button>
-        </p>
+        <input
+          ref={ref => (this.inputRef = ref)}
+          id ="file2"
+          style = {{display: "none"}}
+          type="file"
+          disabled={readonly || disabled}
+          onChange={this.onChange}
+          defaultValue=""
+          autoFocus={autofocus}
+          multiple={multiple}
+        />
+        <button
+          type="button"
+          htmlFor="file"
+          style={{paddingTop:"9px 12px"}}
+          className="default-button"
+          onClick={this.chooseFile}
+        >
+          Upload an Image
+        </button>
         <FilesInfo filesInfo={filesInfo} />
         {
           this.state.fileSizeError &&

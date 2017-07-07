@@ -56,7 +56,7 @@ class ImageWidget extends Component {
   displayFilesInfo() {
     return (
       <div className="file-info">
-        <p style = {{ color: "#333", fontSize: "0.8em", marginLeft:"5px" }}>
+        <p style = {{ color: "#333", fontSize: "0.8em" }}>
           <strong>{this.state.fileName}</strong> ({this.state.fileType}, {this.state.fileSize} bytes)
         </p>
       </div>
