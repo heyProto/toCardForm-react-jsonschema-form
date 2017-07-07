@@ -8,7 +8,7 @@ class ColorWidget extends React.Component {
     super(props);
     this.state = {
       displayColorPicker: false,
-      color: "#FFFFFF",
+      color: this.props.value || "#FFFFFF"
     };
   }
 
