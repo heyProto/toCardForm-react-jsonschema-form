@@ -40,6 +40,7 @@ class ImageWidget extends Component {
     let state = {
       src: this.state.srcStore,
       showModal: false,
+      fileSizeError: undefined
     };
 
     if (!this.state.srcStore) {
@@ -55,7 +56,7 @@ class ImageWidget extends Component {
   displayFilesInfo() {
     return (
       <div className="file-info">
-        <p style = {{ color: "#333", fontSize: "0.8em",marginLeft:"5px" }}>
+        <p style = {{ color: "#333", fontSize: "0.8em", marginLeft:"5px" }}>
           <strong>{this.state.fileName}</strong> ({this.state.fileType}, {this.state.fileSize} bytes)
         </p>
       </div>
@@ -81,11 +82,7 @@ class ImageWidget extends Component {
     } else {
       this.setState({
         fileSizeError: true,
-        src: null,
-        fileInfo: undefined,
-        fileName: false,
-        fileSize: false,
-        fileType: false
+        src: null
       });
       return;
     }
@@ -178,7 +175,7 @@ class ImageWidget extends Component {
               onClick={this.chooseFile}
               style={{"display": "block"}}
             >
-              {this.state.src ? 'Change the image' : 'Choose an image'}
+              {this.state.src ? 'Change the Image' : 'Choose an Image'}
             </button>
             {
               this.state.fileSizeError ?

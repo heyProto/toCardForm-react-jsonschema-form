@@ -137,15 +137,13 @@ class FileWidget extends Component {
           />
           <button type="button" htmlFor = "file" style = {{paddingTop:"9px 12px"}} className="default-button" onClick = {this.chooseFile}>Upload an Image</button>
         </p>
-        {
-            this.state.fileSizeError ?
-              <div className="error-detail bs-callout bs-callout-info">
-                <p className="form-error-message">Image size cannot be more than 500kB.</p>
-              </div>
-            :
-              <span className="form-lable-hint">Hint: Image size cannot be more than 500kB.</span>
-        }
         <FilesInfo filesInfo={filesInfo} />
+        {
+          this.state.fileSizeError &&
+            <div className="error-detail bs-callout bs-callout-info">
+              <p className="form-error-message">Image size cannot be more than 500kB.</p>
+            </div>
+        }
       </div>
     );
   }
