@@ -332,13 +332,14 @@ class App extends Component {
   constructor(props) {
     super(props);
     // initialize state with Simple data sample
-    const { schema, uiSchema, formData, validate } = samples.Simple;
+    const { schema, uiSchema, formData, validate, referenceFormData } = samples.Simple;
     this.state = {
       form: false,
       schema,
       uiSchema,
       formData,
       validate,
+      referenceFormData,
       editor: "default",
       theme: "default",
       liveValidate: true,
@@ -392,7 +393,7 @@ class App extends Component {
     this.setState({ formData, shareURL: null });
 
   onShare = () => {
-    const { formData, schema, uiSchema } = this.state;
+    const { formData, schema, uiSchema, referenceFormData } = this.state;
     const { location: { origin, pathname } } = document;
     try {
       const hash = btoa(JSON.stringify({ formData, schema, uiSchema }));
@@ -411,6 +412,7 @@ class App extends Component {
       validate,
       theme,
       editor,
+      referenceFormData,
       ArrayFieldTemplate,
       transformErrors,
     } = this.state;
@@ -469,6 +471,7 @@ class App extends Component {
               liveValidate={liveValidate}
               schema={schema}
               uiSchema={uiSchema}
+              referenceFormData={referenceFormData}
               formData={formData}
               onChange={this.onFormDataChange}
               onSubmit={({ formData }) =>

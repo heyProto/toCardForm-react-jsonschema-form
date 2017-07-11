@@ -179,6 +179,7 @@ export default class Form extends Component {
         noValidate={noHtml5Validate}
         onSubmit={this.onSubmit}>
         <_SchemaField
+          referenceFormData={this.props.referenceFormData}
           schema={schema}
           uiSchema={uiSchema}
           errorSchema={errorSchema}
