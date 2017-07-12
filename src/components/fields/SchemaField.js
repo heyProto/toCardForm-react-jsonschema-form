@@ -151,19 +151,17 @@ function SchemaFieldRender(props) {
   var schema = retrieveSchema(props.schema, definitions);
   schema = retrieveFromURL(schema,definitions);
   let customRequired;
-  // if (schema.condition) {
-  //   console.log(props.formData, props.referenceFormData,";;;;;;;;;;;;;;;;;;;;;")
-  //   let current_value = schema.condition.element.split("/").reduce((obj, key) => {
-  //     console.log(`key - ${key}`, obj)
-  //     return obj[key];
-  //   }, props.referenceFormData || props.formData);
+  if (schema.condition) {
+    let current_value = schema.condition.element.split("/").reduce((obj, key) => {
+      return obj[key];
+    }, props.referenceFormData || props.formData);
 
-  //   if (schema.condition.value !== current_value) {
-  //     return <div />;
-  //   } else {
-  //     customRequired = true;
-  //   }
-  // }
+    if (schema.condition.value !== current_value) {
+      return <div />;
+    } else {
+      customRequired = true;
+    }
+  }
 
   let required = customRequired ? customRequired : props.required;
 
@@ -194,7 +192,6 @@ function SchemaFieldRender(props) {
   }
 
   const { __errors, ...fieldErrorSchema } = errorSchema;
-  console.log(props, __errors, ...fieldErrorSchema)
   // See #439: uiSchema: Don't pass consumed class names to child components
 
   const field = (
