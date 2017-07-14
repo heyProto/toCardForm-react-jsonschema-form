@@ -1,5 +1,7 @@
 import AltDateWidget from "./AltDateWidget";
 import AltDateTimeWidget from "./AltDateTimeWidget";
+import AltMonthWidget from "./AltMonthWidget";
+import AltYearWidget from "./AltYearWidget";
 import CheckboxWidget from "./CheckboxWidget";
 import CheckboxesWidget from "./CheckboxesWidget";
 import ColorWidget from "./ColorWidget";
@@ -30,6 +32,8 @@ export default {
   DateTimeWidget,
   AltDateWidget,
   AltDateTimeWidget,
+  AltMonthWidget,
+  AltYearWidget,
   EmailWidget,
   URLWidget,
   TextareaWidget,

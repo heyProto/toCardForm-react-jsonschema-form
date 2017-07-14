@@ -26,6 +26,8 @@ const widgetMap = {
     "date-time": "DateTimeWidget",
     "alt-date": "AltDateWidget",
     "alt-datetime": "AltDateTimeWidget",
+    "alt-month": "AltMonthWidget",
+    "alt-year": "AltYearWidget",
     file: "FileWidget",
     color:"ColorWidget",
     textarea:"TextareaWidget",
@@ -480,15 +482,15 @@ export function toIdSchema(schema, id, definitions) {
   return idSchema;
 }
 
-export function parseDateString(dateString, includeTime = true) {
+export function parseDateString(dateString, includeMonth = true, includeDay = true, includeTime = true) {
   if (!dateString) {
     return {
       year: -1,
-      month: -1,
-      day: -1,
+      month: includeMonth ? -1 : 0,
+      day: includeDay ? -1 : 0,
       hour: includeTime ? -1 : 0,
       minute: includeTime ? -1 : 0,
-      second: includeTime ? -1 : 0,
+      second: includeTime ? -1 : 0
     };
   }
   const date = new Date(dateString);
@@ -497,21 +499,23 @@ export function parseDateString(dateString, includeTime = true) {
   }
   return {
     year: date.getUTCFullYear(),
-    month: date.getUTCMonth() + 1, // oh you, javascript.
-    day: date.getUTCDate(),
+    month: includeMonth ? date.getUTCMonth() + 1 : 0,
+    day: includeDay ? date.getUTCDate() : 0,
     hour: includeTime ? date.getUTCHours() : 0,
     minute: includeTime ? date.getUTCMinutes() : 0,
-    second: includeTime ? date.getUTCSeconds() : 0,
+    second: includeTime ? date.getUTCSeconds() : 0
   };
 }
 
 export function toDateString(
-  { year, month, day, hour = 0, minute = 0, second = 0 },
+  { year, month = 0, day = 0, hour = 0, minute = 0, second = 0 },
+  includeMonth = true,
+  includeDay = true,
   time = true
 ) {
   const utcTime = Date.UTC(year, month - 1, day, hour, minute, second);
   const datetime = new Date(utcTime).toJSON();
-  return time ? datetime : datetime.slice(0, 10);
+  return time ? datetime : includeDay ? datetime.slice(0, 10) : includeMonth ? datetime.slice(0, 7) : datetime.slice(0, 4);
 }
 
 export function pad(num, size) {
@@ -533,7 +537,7 @@ export function setState(instance, state, callback) {
 }
 
 export function dataURItoBlob(dataURI) {
-  
+
   // Split metadata from data
     const splitted = dataURI.split(",");
     // Split params

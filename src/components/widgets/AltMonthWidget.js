@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function AltDateWidget(props) {
+function AltMonthWidget(props) {
   const { AltYearWidget } = props.registry.widgets;
-  return <AltYearWidget month day {...props} />;
+  return <AltYearWidget month {...props} />;
 }
 
 if (process.env.NODE_ENV !== "production") {
-  AltDateWidget.propTypes = {
+  AltMonthWidget.propTypes = {
     schema: PropTypes.object.isRequired,
     id: PropTypes.string.isRequired,
     value: PropTypes.string,
@@ -16,4 +16,4 @@ if (process.env.NODE_ENV !== "production") {
   };
 }
 
-export default AltDateWidget;
+export default AltMonthWidget;
