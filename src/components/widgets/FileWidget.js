@@ -108,7 +108,6 @@ class FileWidget extends Component {
         }
       });
     }).catch(error => {
-      console.log(error)
       if (error.fileSizeError) {
         this.setState({
           fileSizeError: true

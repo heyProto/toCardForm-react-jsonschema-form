@@ -89,6 +89,7 @@ class ObjectField extends Component {
               uiSchema={uiSchema[name]}
               errorSchema={errorSchema[name]}
               idSchema={idSchema[name]}
+              referenceFormData={ this.props.referenceFormData }
               formData={formData[name]}
               onChange={this.onPropertyChange(name)}
               onBlur={onBlur}

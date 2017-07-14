@@ -140,8 +140,7 @@ function SchemaFieldRender(props) {
     errorSchema,
     idSchema,
     name,
-    required,
-    registry = getDefaultRegistry(),
+    registry = getDefaultRegistry()
   } = props;
   const {
     definitions,
@@ -151,6 +150,21 @@ function SchemaFieldRender(props) {
   } = registry;
   var schema = retrieveSchema(props.schema, definitions);
   schema = retrieveFromURL(schema,definitions);
+  let customRequired;
+  if (schema.condition) {
+    let current_value = schema.condition.element.split("/").reduce((obj, key) => {
+      return obj[key];
+    }, props.referenceFormData || props.formData);
+
+    if (schema.condition.value !== current_value) {
+      return <div />;
+    } else {
+      customRequired = true;
+    }
+  }
+
+  let required = customRequired ? customRequired : props.required;
+
   const FieldComponent = getFieldComponent(schema, uiSchema, fields);
   const { DescriptionField } = fields;
   const disabled = Boolean(props.disabled || uiSchema["ui:disabled"]);
@@ -178,8 +192,8 @@ function SchemaFieldRender(props) {
   }
 
   const { __errors, ...fieldErrorSchema } = errorSchema;
-
   // See #439: uiSchema: Don't pass consumed class names to child components
+
   const field = (
     <FieldComponent
       {...props}
@@ -190,6 +204,8 @@ function SchemaFieldRender(props) {
       autofocus={autofocus}
       errorSchema={fieldErrorSchema}
       formContext={formContext}
+      required={customRequired}
+      referenceFormData={ props.referenceFormData }
     />
   );
 

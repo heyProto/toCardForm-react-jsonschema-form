@@ -1,78 +1,84 @@
 module.exports = {
   schema: {
-  "title": "A registration form",
-  "description": "A simple form example.",
-  "type": "object",
-  "required": [
-    "firstName",
-    "lastName"
-  ],
-  "properties": {
-    "firstName": {
-      "type": "string",
-      "title": "First name"
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {},
+    "id": "http://example.com/example.json",
+    "properties": {
+      "background_image": {
+          "id": "/properties/data/properties/basic_datapoints/properties/background_image",
+          "type": "object",
+          "properties": {
+              "image": {
+                  "description": "An explanation about the purpose of this instance.",
+                  "id": "/properties/data/properties/cover_data/properties/logo_image",
+                  "title": "Upload a background image",
+                  "type": "string",
+                  "format": "data-url"
+              }
+          }
+      },
+      "introduction": {
+          "id": "/properties/data/properties/basic_datapoints/properties/introduction",
+          "type": "string"
+      },
+      "quiz_title": {
+          "id": "/properties/data/properties/basic_datapoints/properties/quiz_title",
+          "type": "string"
+      },
+      "share_link": {
+          "id": "/properties/data/properties/basic_datapoints/properties/share_link",
+          "type": "string",
+          "condition": {"element": "social_share", "value": true}
+      },
+      "share_msg": {
+          "id": "/properties/data/properties/basic_datapoints/properties/share_msg",
+          "type": "string",
+          "condition": {"element": "social_share", "value": true}
+      },
+      "start_button_text": {
+          "id": "/properties/data/properties/basic_datapoints/properties/start_button_text",
+          "type": "string"
+      }
     },
-    "lastName": {
-      "type": "string",
-      "title": "Last name"
-    },
-    "age": {
-      "type": "integer",
-      "title": "Age"
-    },
-    "bio": {
-      "type": "textarea",
-      "title": "Bio"
-    },
-    "password": {
-      "type": "string",
-      "title": "Password",
-      "minLength": 3
-    },
-    "telephone": {
-      "type": "string",
-      "title": "Telephone",
-      "minLength": 10
-    },
-    "color": {
-      "type": "color",
-      "title": "Color"
-    },
-    "drop":{
-      "type":"string",
-      "title":"Select company",
-      "enum":["Volvo","Saab","Mercedes","Audi"],
-      "default":"Volvo"
-    },
-    "image":{
-      "type":"image",
-      "title":"Upload an Image: ",
-      "ratio":"2/1" 
-    }
-  }
-},
+    "required": [
+      "start_button_text",
+      "quiz_title"
+    ],
+    "type": "object"
+  },
   uiSchema: {
-  "firstName": {
-    "ui:autofocus": true,
-    "ui:emptyValue": ""
+
+      "flip_card": {
+        "ui:widget": "radio"
+      },
+      "revisit_answers": {
+        "ui:widget": "radio"
+      },
+      "social_share": {
+        "ui:widget": "radio"
+      },
+      "timer": {
+        "ui:widget": "radio"
+      }
+
   },
-  "age": {
-    "ui:widget": "updown",
-    "ui:title": "Age of person",
-    "ui:description": "(earthian year)"
-  },
-  "password": {
-    "ui:widget": "password",
-    "ui:help": "Hint: Make it strong!"
-  },
-  "date": {
-    "ui:widget": "alt-datetime"
-  },
-  "telephone": {
-    "ui:options": {
-      "inputType": "tel"
+    "referenceFormData": {
+      "language":"english",
+      "quiz_type":"general",
+      "timer":false,
+      "time_per_question":10,
+      "flip_card":false,
+      "social_share":true,
+      "revisit_answers": true
+    },
+    "formData": {
+      "background_image": {
+        "image": ""
+      },
+      "quiz_title":"How well do you really know what happens when you visit a doctor?",
+      "introduction":"",
+      "start_button_text":"Take our quiz",
+      "share_link":"https://pykih.com",
+      "share_msg":"I found this quiz really informative. Would you like to try it?"
     }
-  }
-},
-  formData: {},
 };
