@@ -23,9 +23,15 @@ const SortableItem = SortableElement((val) =>{
   var props = val.value;
   return(
 
-      <div className={props.hasToolbar ? "col-xs-9" : "col-xs-12"} key={props.index} >
+      <div className={props.hasToolbar ? "twelve wide column" : "sixteen wide column"} key={props.index} >
         <DragHandle />
-        <RemoveBtn type="danger" icon="remove" style = {{ }}  tabIndex="-1" disabled={props.disabled || props.readonly} onClick={props.onDropIndexClick(props.index)}/>
+        <RemoveBtn
+          type="danger"
+          icon="remove"
+          tabIndex="-1"
+          disabled={props.disabled || props.readonly}
+          onClick={props.onDropIndexClick(props.index)}
+        />
         {props.children}
       </div>
 
@@ -64,6 +70,7 @@ const SortableList = SortableContainer((props) => {
         <AddButton
           onClick={props.onAddClick}
           disabled={props.disabled || props.readonly}
+          buttonText={props.addButtonText}
         />}
     </fieldset>
   );
@@ -88,13 +95,13 @@ function ArrayFieldDescription({ DescriptionField, idSchema, description }) {
 }
 
 function IconBtn(props) {
-  const { type = "default", icon, className, ...otherProps } = props;
+  const { type = "default", icon, className, buttonText, ...otherProps } = props;
   return (
     <button
       type="button"
-      className={`btn btn-${type} ${className}`}
+      className={ className }
       {...otherProps}>
-      <i className={`glyphicon glyphicon-${icon}`} />
+      { buttonText ? buttonText :  <i className={`${icon} icon`} style={{"margin": "0px"}} />}
     </button>
   );
 }
@@ -106,7 +113,7 @@ function RemoveBtn(props){
       style = {{fontSize:"20"}}
       className={`default-button delete-button`}
       {...otherProps}>
-      <i style = {{color:"red"}} className={`glyphicon glyphicon-${icon}`} />
+      <i style={{color:"red"}} className="remove icon"  style={{"margin": "0px"}} />
     </button>
   );
 }
@@ -118,23 +125,24 @@ function DefaultArrayItem(props) {
     paddingRight: 6,
     fontWeight: "bold",
   };
-  return (
-    <div key={props.index} className={props.className}>
 
-      <div className={props.hasToolbar ? "col-xs-9" : "col-xs-12"}>
+  return (
+    <div key={props.index} className="ui grid">
+
+      <div className={props.hasToolbar ? "twelve wide column" : "sixteen wide column"}>
         {props.children}
       </div>
 
       {props.hasToolbar &&
-        <div className="col-xs-3 array-item-toolbox">
+        <div className="four wide column">
           <div
-            className="btn-group"
+            className="ui buttons"
             style={{ display: "flex", justifyContent: "space-around" }}>
 
             {(props.hasMoveUp || props.hasMoveDown) &&
               <IconBtn
-                icon="arrow-up"
-                className="array-item-move-up"
+                icon="arrow up"
+                className="ui button"
                 tabIndex="-1"
                 style={btnStyle}
                 disabled={props.disabled || props.readonly || !props.hasMoveUp}
@@ -143,8 +151,8 @@ function DefaultArrayItem(props) {
 
             {(props.hasMoveUp || props.hasMoveDown) &&
               <IconBtn
-                icon="arrow-down"
-                className="array-item-move-down"
+                icon="arrow down"
+                className="ui button"
                 tabIndex="-1"
                 style={btnStyle}
                 disabled={
@@ -157,7 +165,7 @@ function DefaultArrayItem(props) {
               <IconBtn
                 type="danger"
                 icon="remove"
-                className="array-item-remove"
+                className="ui red button"
                 tabIndex="-1"
                 style={btnStyle}
                 disabled={props.disabled || props.readonly}
@@ -199,6 +207,7 @@ function DefaultFixedArrayFieldTemplate(props) {
         <AddButton
           onClick={props.onAddClick}
           disabled={props.disabled || props.readonly}
+          buttonText={props.addButtonText}
         />}
     </fieldset>
   );
@@ -234,6 +243,7 @@ function DefaultNormalArrayFieldTemplate(props) {
         <AddButton
           onClick={props.onAddClick}
           disabled={props.disabled || props.readonly}
+          buttonText={props.addButtonText}
         />}
     </fieldset>
   );
@@ -388,6 +398,7 @@ class ArrayField extends Component {
 
     const arrayProps = {
       canAdd: addable,
+      addButtonText: (addable && itemsSchema.addButtonText ? itemsSchema.addButtonText : undefined),
       items: formData.map((item, index) => {
         const itemErrorSchema = errorSchema ? errorSchema[index] : undefined;
         const itemIdPrefix = idSchema.$id + "_" + index;
@@ -403,6 +414,7 @@ class ArrayField extends Component {
           itemUiSchema: uiSchema.items,
           autofocus: autofocus && index === 0,
           onBlur,
+          canRemove: formData.length > itemsSchema.minItems
         });
       }),
       className: `field field-array field-array-of-${itemsSchema.type}`,
@@ -423,6 +435,7 @@ class ArrayField extends Component {
 
     // Check if a custom render function was passed in
     const Component = ArrayFieldTemplate || DefaultNormalArrayFieldTemplate;
+
     if(isDraggable){
       return <SortableList {...arrayProps}/>;
     }else{
@@ -584,7 +597,7 @@ class ArrayField extends Component {
   renderArrayFieldItem(props) {
     const {
       index,
-      canRemove = true,
+      canRemove = props.canRemove,
       canMoveUp = true,
       canMoveDown = true,
       itemSchema,
@@ -646,15 +659,16 @@ class ArrayField extends Component {
   }
 }
 
-function AddButton({ onClick, disabled }) {
+function AddButton({ onClick, disabled, buttonText }) {
   return (
     <div className="row">
-      <p className="col-xs-3 col-xs-offset-9 array-item-add text-right">
+      <p className="four wide column twelve wide column text-right">
         <IconBtn
           type="info"
           icon="plus"
-          className="btn-add col-xs-12"
+          className="ui button plus"
           tabIndex="0"
+          buttonText={buttonText}
           onClick={onClick}
           disabled={disabled}
         />
