@@ -275,3 +275,13 @@ input[type="color"]{
 .cropper-container{
     width:100%;
 }
+
+.form-title-subtitle-container legend{
+    border-bottom: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+.form-title-subtitle-container {
+    padding-bottom: 5px;
+    border-bottom: 1px solid #efefef;
+}

@@ -7,6 +7,7 @@ import ObjectField from "./ObjectField";
 import SchemaField from "./SchemaField";
 import StringField from "./StringField";
 import TitleField from "./TitleField";
+import SubTitleField from "./SubTitleField";
 import UnsupportedField from "./UnsupportedField";
 import ImageField from "./ImageField";
 import TextareaField from "./TextareaField";
@@ -23,5 +24,6 @@ export default {
   SchemaField,
   StringField,
   TitleField,
+  SubTitleField,
   UnsupportedField,
 };

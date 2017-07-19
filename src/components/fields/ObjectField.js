@@ -46,9 +46,10 @@ class ObjectField extends Component {
       registry = getDefaultRegistry(),
     } = this.props;
     const { definitions, fields, formContext } = registry;
-    const { SchemaField, TitleField, DescriptionField } = fields;
+    const { SchemaField, TitleField, SubTitleField, DescriptionField } = fields;
     const schema = retrieveSchema(this.props.schema, definitions);
     const title = schema.title === undefined ? name : schema.title;
+    const subTitle = schema.subTitle === undefined ? "" : schema.subTitle;
     let orderedProperties;
     try {
       const properties = Object.keys(schema.properties);
@@ -64,15 +65,45 @@ class ObjectField extends Component {
         </div>
       );
     }
+
+    let titleAndSubTitles;
+    if (subTitle) {
+      titleAndSubTitles =
+        (<div className="form-title-subtitle-container">
+          {title &&
+            <TitleField
+              id={`${idSchema.$id}__title`}
+              title={title}
+              required={required}
+              formContext={formContext}
+            />}
+            {subTitle &&
+              <SubTitleField
+                id={`${idSchema.$id}__title`}
+                subTitle={subTitle}
+                required={required}
+                formContext={formContext}
+              />}
+        </div>)
+    } else {
+      titleAndSubTitles = ( <div>
+            {title &&
+              <TitleField
+                id={`${idSchema.$id}__title`}
+                title={title}
+                required={required}
+                formContext={formContext}
+              />}
+          </div>
+        )
+    }
+
+
     return (
       <fieldset>
-        {title &&
-          <TitleField
-            id={`${idSchema.$id}__title`}
-            title={title}
-            required={required}
-            formContext={formContext}
-          />}
+        {
+          titleAndSubTitles
+        }
         {schema.description &&
           <DescriptionField
             id={`${idSchema.$id}__description`}

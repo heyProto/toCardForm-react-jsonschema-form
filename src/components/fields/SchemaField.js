@@ -134,6 +134,30 @@ DefaultTemplate.defaultProps = {
   displayLabel: true,
 };
 
+function customSchemaObjectValidation(condition, referenceFormData) {
+  let current_value = condition.element.split("/").reduce((obj, key) => {
+      return obj[key];
+    }, referenceFormData);
+
+  return condition.value === current_value
+}
+
+function customSchemaArrayValidation(conditions, referenceFormData) {
+  let isValid = -1;
+  conditions.forEach((e) => {
+    let isValidSchema = customSchemaObjectValidation(e, referenceFormData);
+    switch(e.conjunction) {
+      case 'and':
+        isValid = isValid === -1 ? isValidSchema : isValid && isValidSchema;
+        break;
+      case 'or':
+        isValid = isValid === -1 ? isValidSchema : isValid || isValidSchema;
+        break;
+    }
+  });
+  return isValid;
+}
+
 function SchemaFieldRender(props) {
   const {
     uiSchema,
@@ -150,13 +174,22 @@ function SchemaFieldRender(props) {
   } = registry;
   var schema = retrieveSchema(props.schema, definitions);
   schema = retrieveFromURL(schema,definitions);
+
+  //Custom Schema validations.
   let customRequired;
   if (schema.condition) {
-    let current_value = schema.condition.element.split("/").reduce((obj, key) => {
-      return obj[key];
-    }, props.referenceFormData || props.formData);
+    let isValid,
+      condition = schema.condition;
 
-    if (schema.condition.value !== current_value) {
+    if (condition.constructor === Array) {
+      isValid = customSchemaArrayValidation(condition, props.referenceFormData)
+    } else if (condition.constructor === Object) {
+      isValid = customSchemaObjectValidation(condition, props.referenceFormData);
+    } else {
+      isValid = true;
+    }
+
+    if (!isValid) {
       return <div />;
     } else {
       customRequired = true;
