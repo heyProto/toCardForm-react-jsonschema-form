@@ -100,7 +100,7 @@ class ObjectField extends Component {
 
 
     return (
-      <fieldset>
+      <div className="object-field-div">
         {
           titleAndSubTitles
         }
@@ -130,7 +130,7 @@ class ObjectField extends Component {
             />
           );
         })}
-      </fieldset>
+      </div>
     );
   }
 }
