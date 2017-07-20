@@ -50,6 +50,7 @@ class ObjectField extends Component {
     const schema = retrieveSchema(this.props.schema, definitions);
     const title = schema.title === undefined ? name : schema.title;
     const subTitle = schema.subTitle === undefined ? "" : schema.subTitle;
+    const hideTitle = schema.hideTitle;
     let orderedProperties;
     try {
       const properties = Object.keys(schema.properties);
@@ -70,7 +71,7 @@ class ObjectField extends Component {
     if (subTitle) {
       titleAndSubTitles =
         (<div className="form-title-subtitle-container">
-          {title &&
+          {(title && !hideTitle) &&
             <TitleField
               id={`${idSchema.$id}__title`}
               title={title}
@@ -87,7 +88,7 @@ class ObjectField extends Component {
         </div>)
     } else {
       titleAndSubTitles = ( <div>
-            {title &&
+            {(title && !hideTitle) &&
               <TitleField
                 id={`${idSchema.$id}__title`}
                 title={title}

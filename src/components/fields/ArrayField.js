@@ -39,7 +39,6 @@ const SortableItem = SortableElement((val) =>{
 });
 
 const SortableList = SortableContainer((props) => {
-  console.log(";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;++++++")
   return (
     <fieldset className={props.className}>
 
@@ -119,7 +118,7 @@ function RemoveBtn(props){
   );
 }
 // Used in the two templates
-function DefaultArrayItem(props) {
+function DefaultArrayItem(props, index) {
   const btnStyle = {
     flex: 1,
     paddingLeft: 6,
@@ -128,8 +127,14 @@ function DefaultArrayItem(props) {
   };
 
   return (
-    <div className="ui styled accordion">
+    <div key={index} className="form-accordion">
       <div className="title">
+        <h5>{props.itemSchema.title} - {index + 1}</h5>
+      </div>
+      <div className="content">
+        {props.children}
+      </div>
+      <div className="form-buttons-container">
         {
           props.hasToolbar &&
             <div className="ui buttons">
@@ -166,67 +171,11 @@ function DefaultArrayItem(props) {
             </div>
         }
       </div>
-      <div className="content active field">
-        {props.children}
-      </div>
     </div>
   );
-
-
-  // return (
-  //   <div key={props.index} className="ui grid">
-
-  //     <div className={props.hasToolbar ? "twelve wide column" : "sixteen wide column"}>
-  //       {props.children}
-  //     </div>
-
-  //     {props.hasToolbar &&
-  //       <div className="four wide column">
-  //         <div
-  //           className="ui buttons"
-  //           style={{ display: "flex", justifyContent: "space-around" }}>
-
-  //           {(props.hasMoveUp || props.hasMoveDown) &&
-  //             <IconBtn
-  //               icon="arrow up"
-  //               className="ui button"
-  //               tabIndex="-1"
-  //               style={btnStyle}
-  //               disabled={props.disabled || props.readonly || !props.hasMoveUp}
-  //               onClick={props.onReorderClick(props.index, props.index - 1)}
-  //             />}
-
-  //           {(props.hasMoveUp || props.hasMoveDown) &&
-  //             <IconBtn
-  //               icon="arrow down"
-  //               className="ui button"
-  //               tabIndex="-1"
-  //               style={btnStyle}
-  //               disabled={
-  //                 props.disabled || props.readonly || !props.hasMoveDown
-  //               }
-  //               onClick={props.onReorderClick(props.index, props.index + 1)}
-  //             />}
-
-  //           {props.hasRemove &&
-  //             <IconBtn
-  //               type="danger"
-  //               icon="remove"
-  //               className="ui red button"
-  //               tabIndex="-1"
-  //               style={btnStyle}
-  //               disabled={props.disabled || props.readonly}
-  //               onClick={props.onDropIndexClick(props.index)}
-  //             />}
-  //         </div>
-  //       </div>}
-
-  //   </div>
-  // );
 }
 
 function DefaultFixedArrayFieldTemplate(props) {
-  console.log("THIS WAS CALLED...................")
   return (
     <fieldset className={props.className}>
 
@@ -262,7 +211,14 @@ function DefaultFixedArrayFieldTemplate(props) {
 }
 
 function DefaultNormalArrayFieldTemplate(props) {
-  console.log("DefaultNormalArrayFieldTemplate => THIS IS CALLED")
+  const btnStyle = {
+    flex: 1,
+    paddingLeft: 6,
+    paddingRight: 6,
+    fontWeight: "bold",
+  };
+
+  const isParentArray = props.schema.id.indexOf('items') > -1;
   return (
     <div className={props.className}>
 
@@ -282,10 +238,12 @@ function DefaultNormalArrayFieldTemplate(props) {
           description={props.schema.description}
         />}
 
-      <div
-        className="array-item-list"
-        key={`array-item-list-${props.idSchema.$id}`}>
-        {props.items && props.items.map(p => DefaultArrayItem(p))}
+      <div className={`${ isParentArray ? '' : 'ui' } styled fluid accordion`}>
+        {
+          props.items && props.items.map((p, i) => {
+            return DefaultArrayItem(p, i);
+          })
+        }
       </div>
 
       {props.canAdd &&
@@ -424,6 +382,14 @@ class ArrayField extends Component {
     return this.renderNormalArray(schema.drag);
   }
 
+  componentDidMount() {
+    $('.ui.accordion').accordion();
+  }
+
+  componentDidUpdate() {
+    $('.ui.accordion').accordion();
+  }
+
   renderNormalArray( isDraggable ) {
     const {
       schema,
@@ -485,7 +451,7 @@ class ArrayField extends Component {
 
     // Check if a custom render function was passed in
     const Component = ArrayFieldTemplate || DefaultNormalArrayFieldTemplate;
-    console.log("::::::::::::: => ", Component);
+
     if(isDraggable){
       return <SortableList {...arrayProps}/>;
     }else{
@@ -676,7 +642,7 @@ class ArrayField extends Component {
       remove: removable && canRemove,
     };
     has.toolbar = Object.keys(has).some(key => has[key]);
-    console.log("==============> ", itemSchema)
+
     return {
       children: (
         <SchemaField
@@ -696,6 +662,7 @@ class ArrayField extends Component {
         />
       ),
       className: "array-item",
+      itemSchema: itemSchema,
       disabled,
       hasToolbar: has.toolbar,
       hasMoveUp: has.moveUp,
@@ -711,19 +678,15 @@ class ArrayField extends Component {
 
 function AddButton({ onClick, disabled, buttonText }) {
   return (
-    <div className="row">
-      <p className="four wide column twelve wide column text-right">
-        <IconBtn
-          type="info"
-          icon="plus"
-          className="ui button plus"
-          tabIndex="0"
-          buttonText={buttonText}
-          onClick={onClick}
-          disabled={disabled}
-        />
-      </p>
-    </div>
+    <IconBtn
+      type="info"
+      icon="plus"
+      className="ui button plus form-dashed-buttons"
+      tabIndex="0"
+      buttonText={buttonText}
+      onClick={onClick}
+      disabled={disabled}
+    />
   );
 }
 
