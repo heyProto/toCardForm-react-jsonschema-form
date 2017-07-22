@@ -4,88 +4,94 @@ module.exports = {
     "definitions": {},
     "id": "http://example.com/example.json",
     "properties": {
-"questions": {
-                    "id": "/properties/data/properties/questions",
-                    "title": "Questions",
-                    "items": {
-                        "id": "/properties/data/properties/questions/items",
-                        "properties": {
-                            "question": {
-                                "default": "This is a sample question?",
-                                "title": "Question",
-                                "id": "/properties/data/properties/questions/items/properties/question",
-                                "type": "string"
-                            },
-                            "options": {
-                                "title": "Answers",
-                                "id": "/properties/data/properties/questions/items/properties/options",
-                                "items": {
-                                    "id": "/properties/data/properties/questions/items/properties/options/items",
-                                    "properties": {
-                                        "fact": {
-                                            "id": "/properties/data/properties/questions/items/properties/options/items/properties/fact",
-                                            "type": "string",
-                                            "title": "Educative Text"
-                                        },
-                                        "gif_image": {
-                                            "id": "/properties/data/properties/questions/items/properties/options/items/properties/gif_image",
-                                            "type": "object",
-                                            "title": "",
-                                            "properties": {
-                                                "image": {
-                                                    "id": "/properties/data/properties/cover_data/properties/logo_image",
-                                                    "title": "Add an educative image",
-                                                    "type": "string",
-                                                    "format": "data-url"
-                                                }
-                                            },
-                                            "condition": { "element": "quiz_type", "value": "scoring" }
-                                        },
-                                        "option": {
-                                            "default": "Answer Text",
-                                            "title": "Answer Text",
-                                            "id": "/properties/data/properties/questions/items/properties/options/items/properties/option",
-                                            "type": "string"
-                                        },
-                                        "right_or_wrong": {
-                                            "default": true,
-                                            "title": "Is this question right?",
-                                            "id": "/properties/data/properties/questions/items/properties/options/items/properties/right_or_wrong",
-                                            "type": "boolean",
-                                            "condition": { "element": "quiz_type", "value": "scoring" }
-                                        }
-                                    },
-                                    "required": [
-                                        "option"
-                                    ],
-                                    "minItems" : 1,
-                                    "addButtonText": "Add a new option",
-                                    "type": "object"
-                                },
-                                "minItems" : 1,
-                                "type": "array"
-                            }
-                        },
-                        "required": [
-                            "question",
-                            "options"
-                        ],
-                        "minItems" : 1,
-                        "addButtonText": "Add a new question",
-                        "type": "object"
+      "questions": {
+        "id": "/properties/data/properties/questions",
+        "title": "Questions",
+        "items": {
+          "id": "/properties/data/properties/questions/items",
+          "title": "Question",
+          "hideTitle": true,
+          "properties": {
+            "question": {
+              "default": "This is a sample question?",
+              "title": "Question",
+              "id": "/properties/data/properties/questions/items/properties/question",
+              "type": "string"
+            },
+            "options": {
+              "title": "Answers",
+              "id": "/properties/data/properties/questions/items/properties/options",
+              "items": {
+                "id": "/properties/data/properties/questions/items/properties/options/items",
+                "title": "Option",
+                "hideTitle": true,
+                "properties": {
+                  "fact": {
+                    "id": "/properties/data/properties/questions/items/properties/options/items/properties/fact",
+                    "type": "string",
+                    "title": "Educative Text"
+                  },
+                  "gif_image": {
+                    "id": "/properties/data/properties/questions/items/properties/options/items/properties/gif_image",
+                    "type": "object",
+                    "title": "",
+                    "properties": {
+                        "image": {
+                            "id": "/properties/data/properties/cover_data/properties/logo_image",
+                            "title": "Add an educative image",
+                            "type": "string",
+                            "format": "data-url"
+                        }
                     },
-                    "minItems" : 1,
-                    "type": "array"
-                }
+                    "condition": { "element": "quiz_type", "value": "scoring" }
+                  },
+                  "option": {
+                    "default": "Answer Text",
+                    "title": "Answer Text",
+                    "id": "/properties/data/properties/questions/items/properties/options/items/properties/option",
+                    "type": "string"
+                  },
+                  "right_or_wrong": {
+                    "default": true,
+                    "title": "Is this question right?",
+                    "id": "/properties/data/properties/questions/items/properties/options/items/properties/right_or_wrong",
+                    "type": "boolean",
+                    "condition": { "element": "quiz_type", "value": "scoring" }
+                  }
+                },
+                "required": [
+                    "option"
+                ],
+                "minItems" : 1,
+                "addButtonText": "Add a new option",
+                "type": "object"
+              },
+              "minItems" : 1,
+              "type": "array"
+            }
+          },
+          "required": [
+              "question",
+              "options"
+          ],
+          "minItems" : 1,
+          "addButtonText": "Add a new question",
+          "type": "object"
+        },
+        "minItems" : 1,
+        "type": "array"
+      }
     },
     "type": "object"
   },
   uiSchema: {
-    "items": {
-      "options": {
-        "items": {
-          "right_or_wrong": {
-            "ui:widget": "radio"
+    "questions":{
+      "items": {
+        "options": {
+          "items": {
+            "right_or_wrong": {
+              "ui:widget": "toggle"
+            }
           }
         }
       }
@@ -105,7 +111,7 @@ module.exports = {
   },
     "referenceFormData": {
       "language":"english",
-      "quiz_type":"general",
+      "quiz_type":"scoring",
       "timer":false,
       "time_per_question":10,
       "flip_card":false,

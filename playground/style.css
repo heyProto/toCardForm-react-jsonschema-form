@@ -6,7 +6,7 @@ body{
     font-size: 14px;
 }
 .field-object{
-  margin-left:-10px;
+  /*margin-left:-10px;*/
 }
 .container{
     width: 980px;
@@ -284,4 +284,24 @@ input[type="color"]{
 .form-title-subtitle-container {
     padding-bottom: 5px;
     border-bottom: 1px solid #efefef;
+}
+
+.form-dashed-buttons {
+    width: 100%;
+    margin-top: 10px !important;
+    background: transparent !important;
+    border: 1px dashed !important;
+}
+.form-buttons-container {
+    display: block;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+}
+.title.active ~ .form-buttons-container {
+    display: none;
+}
+.form-accordion {
+    position: relative;
+    border-top: 1px solid lightgrey;
 }

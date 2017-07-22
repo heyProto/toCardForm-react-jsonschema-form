@@ -19,6 +19,7 @@ import TextWidget from "./TextWidget";
 import URLWidget from "./URLWidget";
 import UpDownWidget from "./UpDownWidget";
 import ImageWidget from "./ImageWidget";
+import ToggleWidget from "./ToggleWidget";
 
 export default {
   ImageWidget,
@@ -42,4 +43,5 @@ export default {
   FileWidget,
   CheckboxWidget,
   CheckboxesWidget,
+  ToggleWidget
 };

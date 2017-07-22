@@ -8,6 +8,7 @@ const widgetMap = {
     radio: "RadioWidget",
     select: "SelectWidget",
     hidden: "HiddenWidget",
+    toggle: "ToggleWidget"
   },
   string: {
     text: "TextWidget",

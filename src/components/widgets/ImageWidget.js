@@ -149,7 +149,7 @@ class ImageWidget extends Component {
           boxShadow: "0px 10px 20px #efefef",
           borderRadius: "4px",
           display: "inline-block",
-          zIndex: 10},
+          zIndex: 1000},
           content: {
             margin:"-40px"
           }}}
