@@ -128,10 +128,10 @@ function DefaultArrayItem(props, index) {
 
   return (
     <div key={index} className="form-accordion">
-      <div className="title">
+      <div className={`${index === 0 ? 'title active' : 'title'}`}>
         <h5>{props.itemSchema.title} - {index + 1}</h5>
       </div>
-      <div className="content">
+      <div className={`${index === 0 ? 'content active' : 'content'}`}>
         {props.children}
       </div>
       <div className="form-buttons-container">
@@ -430,7 +430,7 @@ class ArrayField extends Component {
           itemUiSchema: uiSchema.items,
           autofocus: autofocus && index === 0,
           onBlur,
-          canRemove: formData.length > itemsSchema.minItems
+          canRemove: itemsSchema.minItems ? formData.length > itemsSchema.minItems : true
         });
       }),
       className: `field field-array field-array-of-${itemsSchema.type}`,
