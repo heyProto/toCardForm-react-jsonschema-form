@@ -51,6 +51,7 @@ function FilesInfo(props) {
 }
 
 function extractFileInfo(dataURLs) {
+  let blob, name, blobData;
   return dataURLs
     .filter(dataURL => {
       var ret = (typeof dataURL !== "undefined");
@@ -58,7 +59,9 @@ function extractFileInfo(dataURLs) {
     })
     .map(dataURL => {
     try{
-      const { blob, name } = dataURItoBlob(dataURL);
+        const blobData = dataURItoBlob(dataURL);
+        blob = blobData.blob;
+        name = blobData.name;
       }catch(e){
         return "";
       }

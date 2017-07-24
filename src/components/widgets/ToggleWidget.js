@@ -14,9 +14,8 @@ function ToggleWidget(props) {
     autofocus,
     onChange,
   } = props;
-  console.log('..........................>++++++++++++++<')
-  return (
 
+  return (
     <div className={`ui toggle checkbox ${disabled || readonly ? "disabled" : ""}`}>
       {schema.description &&
         <DescriptionField description={schema.description} />}
