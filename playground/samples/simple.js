@@ -89,6 +89,11 @@ module.exports = {
       "items": {
         "options": {
           "items": {
+            "gif_image": {
+              "image": {
+                "ui:widget": "hidden"
+              }
+            },
             "right_or_wrong": {
               "ui:widget": "toggle"
             }

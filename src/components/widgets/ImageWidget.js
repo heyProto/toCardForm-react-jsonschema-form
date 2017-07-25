@@ -65,13 +65,15 @@ class ImageWidget extends Component {
 
   onChangeFile(e) {
     e.preventDefault();
-    let file;
+    let file,
+      sizeLimit = this.props.schema.sizeLimit || 500;
     if (e.dataTransfer) {
       file = e.dataTransfer.files[0];
     } else if (e.target) {
       file = e.target.files[0];
     }
-    if ((file.size/1000) <= 500.0) {
+
+    if ((file.size/1000) <= sizeLimit) {
       this.setState({
         fileSizeError: undefined,
         fileInfo: true,
@@ -128,6 +130,7 @@ class ImageWidget extends Component {
   }
 
   render() {
+      let sizeLimit = this.props.schema.sizeLimit || 500;
     return (
       <div>
         <p>
@@ -180,10 +183,10 @@ class ImageWidget extends Component {
             {
               this.state.fileSizeError ?
                 <div className="error-detail bs-callout bs-callout-info">
-                  <p className="form-error-message">Image size cannot be more than 500kB.</p>
+                  <p className="form-error-message">{`Image size cannot be more than ${sizeLimit}kB.`}</p>
                 </div>
               :
-                <span className="form-lable-hint">Hint: Image size cannot be more than 500kB.</span>
+                <span className="form-lable-hint">{`Hint: Image size cannot be more than ${sizeLimit}kB.`}</span>
             }
           </div>
           <div className="form-clearfix"></div>
