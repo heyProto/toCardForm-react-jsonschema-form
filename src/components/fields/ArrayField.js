@@ -137,7 +137,7 @@ function DefaultArrayItem(props, index) {
       <div className="form-buttons-container">
         {
           props.hasToolbar &&
-            <div className="ui buttons">
+            <div className="mini ui buttons">
               {(props.hasMoveUp || props.hasMoveDown) &&
                 <IconBtn
                   icon="arrow up"

@@ -295,8 +295,8 @@ input[type="color"]{
 .form-buttons-container {
     display: block;
     position: absolute;
-    top: 2px;
-    right: 2px;
+    top: 4px;
+    right: 4px;
 }
 .title.active ~ .form-buttons-container {
     display: none;
