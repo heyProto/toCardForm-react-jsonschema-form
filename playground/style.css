@@ -305,3 +305,6 @@ input[type="color"]{
     position: relative;
     border-top: 1px solid lightgrey;
 }
+.protograph-error-accordion {
+    border: 1px solid red;
+}

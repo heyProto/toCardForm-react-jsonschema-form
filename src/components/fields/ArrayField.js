@@ -127,7 +127,7 @@ function DefaultArrayItem(props, index) {
   };
 
   return (
-    <div key={index} className="form-accordion">
+    <div key={index} className={`form-accordion ${props.itemErrorSchema && props.itemErrorSchema.__errors.length > 0 ? 'protograph-error-accordion' : ''}`}>
       <div className={`${index === 0 ? 'title active' : 'title'}`}>
         <h5>{props.itemSchema.title} - {index + 1}</h5>
       </div>
@@ -661,6 +661,7 @@ class ArrayField extends Component {
           referenceFormData={this.props.referenceFormData}
         />
       ),
+      itemErrorSchema: itemErrorSchema,
       className: "array-item",
       itemSchema: itemSchema,
       disabled,
