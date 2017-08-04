@@ -14,7 +14,7 @@ class ImageWidget extends Component {
       cropResult: null,
       url:null,
       showModal:false,
-      zoom: 0.5,
+      zoom: 0.2,
       fileSizeError: undefined,
       fileInfo: undefined,
       srcStore: null
@@ -79,12 +79,15 @@ class ImageWidget extends Component {
         fileInfo: true,
         fileName: file.name,
         fileSize: file.size,
-        fileType: file.type
+        fileType: file.type,
+        src: null,
+        zoom:0.2
       });
     } else {
       this.setState({
         fileSizeError: true,
-        src: null
+        src: null,
+        zoom:0.2
       });
       return;
     }
@@ -199,7 +202,7 @@ class ImageWidget extends Component {
                     toggleDragModeOnDblclick={false}
                     dragMode='move'
                     cropBoxMovable = {false}
-                    zoomOnWheel={false}
+                    zoomOnWheel={true}
                     zoomOnTouch={false}
                     viewMode={1}
                     background={false}
@@ -217,7 +220,7 @@ class ImageWidget extends Component {
                     <div style={{ marginTop:"8px"}}>
                       <input
                         type="range"
-                        min="0.5"
+                        min="0"
                         max="1.75"
                         step="0.05"
                         value={ +this.state.zoom}

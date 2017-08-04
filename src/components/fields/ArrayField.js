@@ -129,7 +129,7 @@ function DefaultArrayItem(props, index) {
   return (
     <div key={index} className={`form-accordion ${props.itemErrorSchema && props.itemErrorSchema.__errors.length > 0 ? 'protograph-error-accordion' : ''}`}>
       <div className={`${index === 0 ? 'title active' : 'title'}`}>
-        <h5>{props.itemSchema.title} - {index + 1}</h5>
+        <h5>{props.itemSchema.title}{` ${props.itemSchema.separator || '-'}`}{index + 1}</h5>
       </div>
       <div className={`${index === 0 ? 'content active' : 'content'}`}>
         {props.children}
