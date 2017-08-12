@@ -118,6 +118,8 @@ class ImageWidget extends Component {
   }
 
   ratioReturn( fraction ){
+    if(fraction === undefined)
+      return fraction;
     var bits = fraction.split("/");
     return parseInt(bits[0],10)/parseInt(bits[1],10);
   }
@@ -198,7 +200,7 @@ class ImageWidget extends Component {
               <div className="form-col-12">
                 <div className="image-crop-area">
                   <Cropper
-                    cropBoxResizable={false}
+                    cropBoxResizable={!this.props.schema.ratio}
                     toggleDragModeOnDblclick={false}
                     dragMode='move'
                     cropBoxMovable = {false}
