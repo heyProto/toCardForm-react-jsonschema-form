@@ -127,7 +127,8 @@ function DefaultArrayItem(props, index) {
   };
 
   return (
-    <div key={index} className={`form-accordion ${props.itemErrorSchema && props.itemErrorSchema.__errors.length > 0 ? 'protograph-error-accordion' : ''}`}>
+
+    <div key={index} className={`form-accordion ${props.itemErrorSchema && props.itemErrorSchema.__errors && props.itemErrorSchema.__errors.length > 0 ? 'protograph-error-accordion' : ''}`}>
       <div className={`${index === 0 ? 'title active' : 'title'}`}>
         <h5>{props.itemSchema.title}{` ${props.itemSchema.separator || '-'}`}{index + 1}</h5>
       </div>
@@ -217,7 +218,6 @@ function DefaultNormalArrayFieldTemplate(props) {
     paddingRight: 6,
     fontWeight: "bold",
   };
-
   const isParentArray = props.schema.id.indexOf('items') > -1;
   return (
     <div className={props.className}>
@@ -411,9 +411,8 @@ class ArrayField extends Component {
     const { TitleField, DescriptionField } = fields;
     const itemsSchema = retrieveSchema(schema.items, definitions);
     const { addable = true } = getUiOptions(uiSchema);
-
     const arrayProps = {
-      canAdd: addable,
+      canAdd: addable && (itemsSchema.maxItems ? formData.length < itemsSchema.maxItems : true),
       addButtonText: (addable && itemsSchema.addButtonText ? itemsSchema.addButtonText : undefined),
       items: formData.map((item, index) => {
         const itemErrorSchema = errorSchema ? errorSchema[index] : undefined;
