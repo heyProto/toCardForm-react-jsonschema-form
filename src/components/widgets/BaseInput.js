@@ -30,6 +30,7 @@ function BaseInput(props) {
   const _onChange = ({ target: { value } }) => {
     return props.onChange(value === "" ? options.emptyValue : value);
   };
+  console.log(schema);
   return (
     <input
       className = {inputClass}
@@ -37,6 +38,7 @@ function BaseInput(props) {
       disabled={disabled}
       autoFocus={autofocus}
       value={value == null ? "" : value}
+      maxLength={(schema.type === "string" || schema.type === "textarea") && schema.maxlength ? schema.maxlength : null}
       {...inputProps}
       onChange={_onChange}
       onBlur={onBlur && (event => onBlur(inputProps.id, event.target.value))}
