@@ -156,8 +156,10 @@ input[type="color"]{
     margin-top: -5px;
 }
 
+div.ui.search.dropdown.form-dropdown.selection::before,div.ui.search.dropdown.form-dropdown.selection::after{
+    display:none;
+}
 .form-dropdown{
-    -webkit-appearance: none;
     padding: 7px 10px;
     font-size: 1em;
     background: white;

@@ -29,7 +29,11 @@ export default class Form extends Component {
   componentWillReceiveProps(nextProps) {
     this.setState(this.getStateFromProps(nextProps));
   }
-
+  componentDidMount(){
+    $('.ui.dropdown').dropdown({
+      direction: 'downward'
+    });
+  }
   getStateFromProps(props) {
     const state = this.state || {};
     const schema = "schema" in props ? props.schema : this.props.schema;
